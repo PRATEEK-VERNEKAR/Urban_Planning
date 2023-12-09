@@ -3,11 +3,10 @@ import { NextResponse } from "next/server";
 import {connect} from "@/dbConfig/dbConfig";
 // import { NextRequest,NextResponse } from "next/server";
 import Report from "@/models/reportModel";
-
+const fs=require('fs');
 
 // export async function GET() {
 //     try{
-        
 //         // const params = useParams();
 //         // console.log(params);
 //         // const cityReport=await Report.find({});
@@ -32,6 +31,10 @@ export async function GET(request,content){
         const cityReport = await Report.find({city:city});
 
         console.log(cityReport);
+
+        fs.writeFileSync('tempImageStore/previous.jpg',cityReport.previousImage);
+        fs.writeFileSync('tempImageStore/current.jpg',cityReport.currentImage);
+        
         return NextResponse.json({virat:"Kohli"});
     }
     catch(err){
