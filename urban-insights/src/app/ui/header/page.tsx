@@ -2,10 +2,10 @@ import Image from 'next/image'
 
 export default function Header() {
   return (
-    <header className="fixed w-full bg-red-900 text-white p-4">
-      <div className="container mx-auto">
-        <h1 className="text-4xl font-bold tracking-wide">Satellite Explorer</h1>
-        <p className="text-lg">Explore the universe with our amazing satellite-themed website!</p>
+    <header className="fixed px-32 w-full h-80 bg-[#01060D] text-white animate__animated animate__fadeInDown">
+      <div className="flex flex-col">
+        <h1 className="montserrat h-property text-[#F7F7F7]">Urban Insights</h1>
+        <p className="overpass text-[#F5F5F5]">Explore the universe with our amazing satellite-themed website!</p>
       </div>
     </header>
   )
