@@ -21,7 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className+" h-screen flex flex-col"}>
         <Header/>
-        <div className='flex-grow mt-[100px] flex justify-center items-center mx-4'>
+        <div className='flex-grow mt-[80px] flex justify-center items-center px-32 bg-transparent'>
           {children}
         </div>
         <Footer/>
