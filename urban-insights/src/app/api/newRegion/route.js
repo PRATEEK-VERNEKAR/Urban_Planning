@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(req,res){
     try{
-
+        console.log("HI");
         connect();
         const {name,states,neighborCountry,area,borderLength}=await req.json();
         

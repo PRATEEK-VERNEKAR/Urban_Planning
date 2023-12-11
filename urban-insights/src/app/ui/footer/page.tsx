@@ -1,3 +1,4 @@
+
 import Image from 'next/image'
 import 'animate.css'
 
@@ -18,3 +19,5 @@ export default function Footer() {
     </footer>
   )
 }
+
+
