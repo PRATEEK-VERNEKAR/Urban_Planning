@@ -1,6 +1,10 @@
 import mongoose, { Schema } from 'mongoose'
 
 const borderSchema=mongoose.Schema({
+    regionID:{
+        type:Number,
+        required:[true,"Number ID mandatory"]
+    },
     name:{
         type:String,
         required:[true,'name is required']
