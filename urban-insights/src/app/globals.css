@@ -2,10 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -18,10 +22,101 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: radial-gradient(circle at 50% 50%,#01060d, #051628);
+}
+
+
+.h-64{
+  height:64px;
+}
+
+.h-80{
+  height:80px;
+}
+
+.montserrat{
+  font-family:Montserrat;
+}
+
+.overpass{
+  font-family:overpass;
+}
+
+.h-property{
+  font-size:2.00em;
+  font-weight:bold;
+}
+
+header{
+  display: flex;
+  flex-direction: row;
+  padding:16px;  
+  
+  box-sizing:border-box;
+}
+
+.px-32{
+  padding-left:32px;
+  padding-right:32px;
+}
+
+header div{
+  box-sizing: content-box;
+  line-height: 1.1;
+}
+
+footer{
+  width:100%;
+  position:fixed;
+  bottom:16px;
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+footer div{
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width:180px;
+  height:40px;
+  box-sizing: content-box;
+  padding:8px;
+  padding-left:16px;
+  padding-right: 16px;
+  
+}
+
+
+.link-share{
+  border-radius:100%;
+  height:40px;
+  width:40px;
+}
+
+.link-share:hover{
+  background-color:rgba(68, 193, 226,0.6);
+}
+
+.sh-btn{
+  box-shadow:0px 0px 5px 5px rgba(109, 242, 242,0.6);
+}
+
+.sh-btn:active{
+  animation:move 1s -1s 1 ease normal forwards;
+}
+
+@keyframes move {
+  to{
+    box-shadow:0px 0px 5px 10px rgba(109, 242, 242,0.6);
+  }
+}
+
+.txt-24{
+  font-size:24px;
+}
+
+.r-btn{
+  border-radius: 4px;
 }
