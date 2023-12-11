@@ -11,5 +11,5 @@ const mobileSchema = new mongoose.Schema({
     }
 });
 
-const mobilereg = mongoose.models.mobile || mongoose.model('mobile',mobileSchema);
-export default mobilereg;
+const Mobilereg = mongoose.models.mobile || mongoose.model('mobile',mobileSchema);
+export default Mobilereg;
