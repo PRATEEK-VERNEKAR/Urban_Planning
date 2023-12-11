@@ -16,7 +16,6 @@ export async function POST(request,response){
             })
         }
 
-
         savedImages.imageData.push({dateTime:Date.now(),image:receivedImage,predicted:false});
     }
     catch(err){
