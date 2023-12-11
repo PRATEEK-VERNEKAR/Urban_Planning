@@ -13,7 +13,6 @@ export function connect(){
         //     process.exit();
         // })
 
-        console.log("\nIndia\n");
 
         mongoose.connect("mongodb+srv://mprateekvernekar189:WIBNp48oFt0mNT70@cluster0.oy9ycha.mongodb.net/Hard-Coded?retryWrites=true&w=majority").then(()=>{
             console.log("Connection successful for mongodb");

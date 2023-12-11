@@ -8,11 +8,15 @@ export async function POST(req,res){
         connect();
         const {name,states,neighborCountry,area,borderLength}=await req.json();
         
-        const newRegion=new Border({name,states,neighborCountry,area,borderLength});
+        const newRegion=new Border({regionID:1,name,states,neighborCountry,area,borderLength});
         
+        console.log("\n\nINDIA\n\n");
         const savedNewRegion = await newRegion.save()
         
-        return NextResponse.status(201).json({
+        console.log(savedNewRegion);
+
+        console.log("HI")
+        return NextResponse.json({
             message:"New Region Added",
             savedNewRegion
         })
