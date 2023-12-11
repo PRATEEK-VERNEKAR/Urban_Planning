@@ -18,7 +18,7 @@ cron.schedule('0 * * * * ',async ()=>{
                 
                 MoniteredRegion["imageData"].classes=res;
 
-                const updatedModel = await MonitorModel.updateOne({_id:MoniteredRegion._id},{$set:newData},{new:true});
+                const updatedModel = await MonitorModel.updateOne({_id:MoniteredRegion._id},{$set:MoniteredRegion},{new:true});
 
                 console.log(updatedModel);
             }
@@ -30,7 +30,8 @@ cron.schedule('0 * * * * ',async ()=>{
 export async function GET(request,content){
     try{
         connect();
-        const region=connect.params.region();
+        const region=content.params.region();
+        const {regionID}=await request.json();
         const completeInfo = await Border.find({name:region});
         if(!completeInfo){
             return NextResponse.status(404).json({
@@ -38,7 +39,9 @@ export async function GET(request,content){
             })
         }
 
+        const allMoniteredModel=await MonitorModel.find({regionID});
 
+        return NextResponse.status(200).json(allMoniteredModel);
     }
     catch(err){
         return NextResponse.status(500).json({
