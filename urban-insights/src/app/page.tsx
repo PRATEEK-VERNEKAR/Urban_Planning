@@ -4,12 +4,16 @@ import Image from 'next/image'
 export default function Home() {
   return (
 
-      <div className='bg-transparent' >
-        <a 
-        href='/ui/dashboard'
-        className='sh-btn overpass txt-16 font-bold text-[#D8D8D8] w-24 h-24 flex justify-center items-center rounded-full bg-[#44C1E2] bg-opacity-75 animate__animated animate__zoomIn'>
-          Explore
-        </a>        
+      <div className='bg-transparent flex flex-row items-center justify-center' >
+        <a href='#' className='explore flex flex-row items-center gap-x-3'><div>Explore</div> 
+        <Image
+      src="/right-arrow.svg"
+      width={24}
+      height={24}
+      alt="Picture of the author"
+      className='block animate__animated'
+    />
+        </a>      
       </div>
   )
 }
