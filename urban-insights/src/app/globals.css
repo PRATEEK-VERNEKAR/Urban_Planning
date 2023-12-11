@@ -143,4 +143,34 @@ footer div{
   box-sizing: content-box;
 }
 
+.btn-nav{
+  width:auto;
+  height:56px;
+  padding:12px;
+  background-color: #93DEFF;
+  border-radius:8px;
+  font-size:0.90em;
+}
 
+.nform{
+  background-color: #606470;
+  padding:24px 32px 18px 32px;
+  border-radius:6px;
+  row-gap: 16px;
+}
+
+.nform-header{
+  font-size:1.5em;
+  font-weight:bold;
+  border:none;
+  border-bottom:solid 5px white;
+  padding-bottom:8px;
+  margin-bottom:8px;
+}
+
+.nform-send{
+  width:64px;
+  height:32px;
+  background-color:#93DEFF;
+  
+}
