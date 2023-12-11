@@ -6,7 +6,7 @@ export default function Home() {
 
       <div >
         <a 
-        href='/ui/dashboard'
+        href='/twoOptions'
         className='w-36 h-36 flex justify-center items-center rounded-full bg-orange-800'>
           Explore Earth
         </a>        
