@@ -30,14 +30,10 @@ export async function GET(request,content){
 
         const cityReport = await Report.find({city:city});
 
-        console.log(cityReport);
-
-        fs.writeFileSync('tempImageStore/previous.jpg',cityReport.previousImage);
-        fs.writeFileSync('tempImageStore/current.jpg',cityReport.currentImage);
-        
-        return NextResponse.json({virat:"Kohli"});
+        return NextResponse.json(cityReport);
     }
-    catch(err){
-        console.log("Some")
-    }
+    catch(error){
+        console.log("Some error getting report")
+            return NextResponse.json({message:error.message},{status:500})
+        }
 }

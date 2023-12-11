@@ -20,14 +20,13 @@ const reportSchema=new mongoose.Schema({
     },
     previousImage:{
         data:Buffer,
-        contentType:String,
+        contentType:String
     },
     currentImage:{
         data:Buffer,
-        contentType:String,
+        contentType:String
     }
 })
-
 
 
 const Report = mongoose.models.reports || mongoose.model('reports',reportSchema);
