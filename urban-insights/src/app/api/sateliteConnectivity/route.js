@@ -16,8 +16,22 @@ export async function POST(request,response){
             })
         }
 
+        const currentMontitor=await MonitorModel.find({regionID:regionID});
 
-        savedImages.imageData.push({dateTime:Date.now(),image:receivedImage,predicted:false});
+        if(!currentMontitor){
+            const newMonitor=MonitorModel({regionID,"startDateTime":Date.now(),"imageData":[{"dateTime":Date.now(),"image":receivedImage,"predicted":false}]})
+
+            await newMonitor.save()
+        }
+        else{
+            const tempImageInfo = {"dateTime":Date.now(),"image":receivedImage,"predicted":false};
+            currentMontitor["imageData"].push(tempImageInfo);
+            await MonitorModel.findOneAndUpdate({regionID},currentMontitor,{new:true})
+        }
+
+        return NextResponse.status(201).json({
+            "message":`New image saved for ${regionID}`
+        })
     }
     catch(err){
         return NextResponse.status(500).json({
