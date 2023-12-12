@@ -13,6 +13,7 @@ export default function Home() {
       alt="Picture of the author"
       className='block animate__animated'
     />
-        </a>      </div>
+        </a>
+        </div>
   )
 }

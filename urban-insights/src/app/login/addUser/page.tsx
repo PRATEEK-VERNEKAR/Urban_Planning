@@ -91,7 +91,7 @@ export default function UserRegistration() {
             type="text"
             id="deptusername"
             name="deptusername"
-            value={formData.deptusername}
+            value={formData.deptuseraname}
             onChange={handleInputChange}
             required         
             className="w-full outline-none transparent"   
