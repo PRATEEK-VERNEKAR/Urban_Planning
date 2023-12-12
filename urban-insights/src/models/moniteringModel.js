@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const moniteringModelSchema=mongoose.Schema({
     "regionID":{
-        type:Number,
+        type:String,
         required:[true,"region id is required"]
     },
     "startDateTime":{
