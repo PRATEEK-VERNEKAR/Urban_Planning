@@ -6,16 +6,18 @@ import nodemailer from 'nodemailer';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req) {
+    connect();
+    let email;
     const reqBody = await req.json();
     const { deptusername, deptpassword, username, password } = reqBody;
-    const user = await Authentication.findOne({ username: username }).maxTimeMS(30000); // Set timeout to 30 seconds
+    const user = await Authentication.findOne({ username: username }) // Set timeout to 30 seconds
 
     if (user) {
         const check = await bcrypt.compare(deptpassword, user.deptpassword);
         const passcheck = await bcrypt.compare(password, user.password);
         if (deptusername === user.deptusername && username === user.username && check && passcheck) {
             const otp = generateOtp();
-            const email = user.email;
+            email = user.email;
             console.log(email);
 
             // Send OTP via email
