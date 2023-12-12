@@ -187,11 +187,65 @@ footer div{
 .nform-input input{
   color:#323643cf;
   font-size:0.8em;
+  padding-left:4px;
 }
 
 .nform-input label{
   background-color: #60647044;
   padding:8px;
   font-size:0.8em;
-  color:#f7f7f767;
+  color:#f7f7f79b;
+}
+
+.font-small{
+  font-size:0.75em;
+}
+
+.nform-btn{
+  padding:4px;
+  background-color: #323643;
+  border-radius:4px;
+  width:auto;
+  box-sizing: content-box;
+}
+
+.nform-sugg{
+  background-color:#323643a5;
+  width:212px;
+  border-radius:0 0 4px 4px;
+  max-height:128px;
+  height:auto;
+  overflow-y: scroll;
+
+}
+
+.nform-sugg div{
+  padding:4px;
+  padding-left:8px;
+}
+
+.nform-sugg div:hover{
+  border-bottom : solid 1px #323643;
+  border-top:solid 1px #323643;
+  cursor:pointer;
+}
+
+.line{
+  height:1px;
+  background-color: #efeeeeaa;
+}
+
+.dept{
+  color:#efeeeeaa;
+}
+
+.login-send{
+  width:48px;
+  font-size: 0.85em;
+  height:24px;
+}
+
+.otp{
+  width:80px;
+  font-size:0.85em;
 }
