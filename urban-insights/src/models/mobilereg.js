@@ -5,7 +5,7 @@ const mobileSchema = new mongoose.Schema({
         type:String,
         requried:[true]
     },
-    phoneno:{
+    email:{
         type:String,
         required:[true]
     }
