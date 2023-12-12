@@ -8,13 +8,13 @@ export async function POST(req){
     try{
         connect();
         const data=await req.formData();
-        console.log(data)
+        // console.log(data)
         const image=data.get('image');
         const regionID = data.get('regionID');
         
         const checkBorderPresent=await Border.findOne({regionID});
 
-        console.log(checkBorderPresent)
+        // console.log(checkBorderPresent)
 
         if(!checkBorderPresent){
             return NextResponse.json({message:"Region Not registered to be monitered"},{status:403});
@@ -26,7 +26,7 @@ export async function POST(req){
         const byteData=await image.arrayBuffer();
         const buffer=Buffer.from(byteData);
         
-        console.log(buffer)
+        // console.log(buffer)
         
         const path=`./public/${image.name}`
         await writeFile(path,buffer);
@@ -38,7 +38,7 @@ export async function POST(req){
 
 
         if(!checkIfPresentMonitor){
-            console.log("\n\nif\n\n")
+            // console.log("\n\nif\n\n")
             const newMonitor=new MonitorModel({
                 regionID:regionID,
                 startDateTime:Date.now(),
@@ -52,17 +52,17 @@ export async function POST(req){
                 }]
             })
 
-            console.log(newMonitor)
+            // console.log(newMonitor)
             const newImageSet = await newMonitor.save();
             // console.log(newImageSet);
         }
         else{
-            console.log("\n\nelse\n\n")
+            // console.log("\n\nelse\n\n")
 
             const updateImageData={dateTime:Date.now(),image:{data:buffer,contentType:"image/jpg"},predicted:false}
 
-            console.log(updateImageData)
-            console.log("\n\n\n\n")
+            // console.log(updateImageData)
+            // console.log("\n\n\n\n")
             // console.log(checkIfPresentMonitor['imageData'])
             checkIfPresentMonitor['imageData'].push(updateImageData)
             
@@ -76,7 +76,7 @@ export async function POST(req){
         },{status:201})
     }
     catch(err){
-        console.log(err)
+        // console.log(err)
         return NextResponse.json({
             "message":`Failed to stored image`
         },{status:500})
