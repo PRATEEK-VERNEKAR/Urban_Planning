@@ -35,8 +35,6 @@ export async function POST(req){
         const checkIfPresentMonitor=await MonitorModel.findOne({regionID})
         
 
-
-
         if(!checkIfPresentMonitor){
             console.log("\n\nif\n\n")
             const newMonitor=new MonitorModel({
