@@ -1,4 +1,4 @@
-While your making the call to /processImage grab the user details and image details (the time where you populate borderschema details)
+While your making the call to /predict grab the user details and image details (the time where you populate borderschema details)
 
 check if user does not have restriction on that regionId 
 
