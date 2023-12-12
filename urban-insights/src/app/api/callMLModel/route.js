@@ -16,7 +16,7 @@ export async function GET(req,res){
             imageData.forEach(async (singleImageData)=>{
                 // const modelPrediction = await fetch("http://localhost:8080/predict",{
                 //     method:"POST",
-                //     header:{"Content-Type":'application/json'}
+                //     header:{"Content-Type":'application/json'},
                 //     body:JSON.stringify({image:singleImageData.image.data})
                 // })
 
@@ -24,8 +24,9 @@ export async function GET(req,res){
                     image: singleImageData.image.data
                 });
 
-                console.log(typeof(modelPrediction.data));
-                console.log(modelPrediction);
+                // // console.log(typeof(modelPrediction.data));
+                // console.log(modelPrediction.data);
+                // // console.log(modelPrediction);
             })
         })
         
