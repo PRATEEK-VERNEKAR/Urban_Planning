@@ -8,7 +8,7 @@ export async function POST(req,res){
         const {regionID,name,states,neighborCountry,area,borderLength,govtBodies}=await req.json();
         
         const newRegion=new Border({regionID,name,states,neighborCountry,area,borderLength,govtBodies});
-        
+
         console.log(govtBodies);
         // console.log("\n\nINDIA\n\n");
         const savedNewRegion = await newRegion.save()
