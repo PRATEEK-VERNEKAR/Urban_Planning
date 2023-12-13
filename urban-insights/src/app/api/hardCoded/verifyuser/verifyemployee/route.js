@@ -46,7 +46,8 @@ export async function POST(req) {
 
             return NextResponse.json({
                 message: "Success",
-                success: true
+                success: true,
+                user:user
             });
         } else {
             return NextResponse.json({

@@ -3,6 +3,8 @@
 
 import { useState } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
+
 
 export default function LoginForm() {
   const [formData, setFormData] = useState({
@@ -32,6 +34,8 @@ export default function LoginForm() {
 
       if (response.data.success) {
         console.log("Login successful!");
+        Cookies.remove("user")
+        Cookies.set("user", JSON.stringify(response.data.user));
       } else {
         console.error("Login failed:", response.data.message);
       }

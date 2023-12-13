@@ -1,5 +1,4 @@
-import mongoose from "mongoose";
-import {connect} from "@/dbConfig/dbConfig";
+import { connect, disconnect } from '@/dbConfig/dbConfig'
 import Border from "../../../models/borderModel";
 import { NextResponse } from "next/server";
 
@@ -13,10 +12,8 @@ export async function POST(req,res){
         console.log(govtBodies);
         // console.log("\n\nINDIA\n\n");
         const savedNewRegion = await newRegion.save()
-        
-        console.log(savedNewRegion);
 
-        // console.log("HI")
+        disconnect()
         return NextResponse.json({
             message:"New Region Added",
             savedNewRegion
