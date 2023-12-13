@@ -21,6 +21,10 @@ const authSchema = new mongoose.Schema({
         type: String,
         required: [true, 'dept password is required']
     },
+    isAdmin:{
+        type:Boolean,
+        default:false
+    }
 });
 
 const Authentication = mongoose.models.auth || mongoose.model('auth', authSchema);
