@@ -33,11 +33,7 @@ const borderSchema=mongoose.Schema({
                 type:String,
                 required:[true,'Ministry Name is required']
             },
-            // emails:[
-            //     {
-            //         type:String
-            //     }
-            // ]
+            emails:[String]
         }
     ]
 })
