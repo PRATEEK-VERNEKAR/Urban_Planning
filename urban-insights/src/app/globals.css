@@ -153,24 +153,99 @@ footer div{
 }
 
 .nform{
-  background-color: #606470;
+  background-color: #606470c3;
   padding:24px 32px 18px 32px;
   border-radius:6px;
   row-gap: 16px;
+  width:352px;
 }
 
 .nform-header{
   font-size:1.5em;
   font-weight:bold;
   border:none;
-  border-bottom:solid 5px white;
-  padding-bottom:8px;
+  border-bottom:solid 2px #f7f7f796;
+  padding-bottom:4px;
   margin-bottom:8px;
+  color:#f7f7f78e;
 }
 
 .nform-send{
-  width:64px;
-  height:32px;
-  background-color:#93DEFF;
-  
+  width:auto;
+  height:auto;
+  background-color:#93dfffbf;
+  padding:8px 12px 8px 12px;
+  box-sizing: content-box;
+  border-radius: 8px;
+}
+
+.nform-input{
+  background-color: #efeeeeaa;
+  border-radius: 2px;
+}
+
+.nform-input input{
+  color:#323643cf;
+  font-size:0.8em;
+  padding-left:4px;
+}
+
+.nform-input label{
+  background-color: #60647044;
+  padding:8px;
+  font-size:0.8em;
+  color:#f7f7f79b;
+}
+
+.font-small{
+  font-size:0.75em;
+}
+
+.nform-btn{
+  padding:4px;
+  background-color: #323643;
+  border-radius:4px;
+  width:auto;
+  box-sizing: content-box;
+}
+
+.nform-sugg{
+  background-color:#323643a5;
+  width:212px;
+  border-radius:0 0 4px 4px;
+  max-height:128px;
+  height:auto;
+  overflow-y: scroll;
+
+}
+
+.nform-sugg div{
+  padding:4px;
+  padding-left:8px;
+}
+
+.nform-sugg div:hover{
+  border-bottom : solid 1px #323643;
+  border-top:solid 1px #323643;
+  cursor:pointer;
+}
+
+.line{
+  height:1px;
+  background-color: #efeeeeaa;
+}
+
+.dept{
+  color:#efeeeeaa;
+}
+
+.login-send{
+  width:48px;
+  font-size: 0.85em;
+  height:24px;
+}
+
+.otp{
+  width:80px;
+  font-size:0.85em;
 }

@@ -5,6 +5,7 @@ import Header from './ui/header/header'
 import Footer from './ui/footer/footer'
 
 
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {

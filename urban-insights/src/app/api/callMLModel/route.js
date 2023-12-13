@@ -1,6 +1,5 @@
-import Border from "../../../models/borderModel";
 import MonitorModel from "../../../models/moniteringModel";
-import {connect} from "../../../dbConfig/dbConfig";
+import {connect,disconnect} from "../../../dbConfig/dbConfig";
 import { NextResponse } from 'next/server'
 import axios from 'axios';
 
@@ -13,6 +12,7 @@ export async function GET(req,res){
 
         connect();
         const allMonitorRegions=await MonitorModel.find({});
+        disconnect()
 
         for(const singleRegion of allMonitorRegions){
             const imageData=singleRegion['imageData'];
