@@ -4,11 +4,39 @@ import {connect} from "../../../dbConfig/dbConfig";
 import { NextResponse } from 'next/server'
 import axios from 'axios';
 
+
+const delay = (ms)=> new Promise((resolve)=>setTimeout(resolve,ms));
+
+
 export async function GET(req,res){
     try{
 
         connect();
         const allMonitorRegions=await MonitorModel.find({});
+
+        for(const singleRegion of allMonitorRegions){
+            const imageData=singleRegion['imageData'];
+
+            console.log("For region ",singleRegion.regionID);
+
+            for(const singleImageData of imageData){
+                const modelPrediction=await axios.post("http://localhost:8080/predict",{
+                    image:singleImageData.image.data
+                });
+
+                console.log("\t\tImage ID :- ",singleImageData._id);
+                
+                const updatedImageData=await MonitorModel.updateOne(
+                    {"_id":singleRegion._id,"imageData._id":singleImageData._id},
+                    {$set:{"imageData.$.classes":modelPrediction.data.classes,"imageData.$.predicted":true}}    
+                )
+
+                console.log(updatedImageData);
+
+
+                // await delay(10000);
+            }
+        }
         
         // let PredictionArray=[];
         // allMonitorRegions.forEach((singleRegion)=>{
@@ -44,22 +72,25 @@ export async function GET(req,res){
         // return NextResponse.json({"HI":"MSG"},{status:200});
 
 
-        await Promise.all(allMonitorRegions.map(async (singleRegion)=>{
-            const imageData=singleRegion['imageData'];
+        // await Promise.all(allMonitorRegions.map(async (singleRegion)=>{
+        //     const imageData=singleRegion['imageData'];
 
-            await Promise.all(imageData.map(async (singleImageData)=>{
-                const modelPrediction=await axios.post('http://localhost:8080/predict',{
-                    image:singleImageData.image.data
-                });
+        //     console.log("FOR region ",singleRegion.regionID)
+            
+        //     await Promise.all(imageData.map(async (singleImageData)=>{
+        //         const modelPrediction=await axios.post('http://localhost:8080/predict',{
+        //             image:singleImageData.image.data
+        //         });
+        //         console.log("\t\tImage ID :- ",singleImageData._id);
+        //         const updatedImageData=await MonitorModel.updateOne(
+        //             {"_id":singleRegion._id,"imageData._id":singleImageData._id},
+        //             {$set:{"imageData.$.classes":modelPrediction.data.classes,"imageData.$.predicted":true}}
+        //         )
 
-                const updatedImageData=await MonitorModel.updateOne(
-                    {"_id":singleRegion._id,"imageData._id":singleImageData._id},
-                    {$set:{"imageData.$.classes":modelPrediction.data.classes,"imageData.$.predicted":true}}
-                )
+        //         console.log(updatedImageData);
+        //     }))
+        // }))
 
-                console.log(updatedImageData);
-            }))
-        }))
 
 
         return NextResponse.json({"message":"Objects Predicted Successfully"});
