@@ -27,7 +27,19 @@ const borderSchema=mongoose.Schema({
         type:Schema.Types.Decimal128,
         required:[true,'Border Lenght is required']
     },
-
+    govtBodies:[
+        {
+            ministryName:{
+                type:String,
+                required:[true,'Ministry Name is required']
+            },
+            // emails:[
+            //     {
+            //         type:String
+            //     }
+            // ]
+        }
+    ]
 })
 
 const Border=mongoose.models.borders || mongoose.model('borders',borderSchema);
