@@ -1,4 +1,4 @@
-import {connect} from '@/dbConfig/dbConfig';
+import {connect,disconnect} from '@/dbConfig/dbConfig';
 
 import Authentication from '@/models/auth.js';
 const bcrypt = require('bcrypt');
@@ -8,10 +8,7 @@ import { NextRequest,NextResponse } from 'next/server';
 export async function POST(req){
     
     try{
-        
-        // let use
-        
-        // let newUser;
+    
         connect();
         console.log("MS Dhoni");
         const reqBody = await req.json();
@@ -34,7 +31,8 @@ export async function POST(req){
 
         });
         console.log(newUser)
-        const use = await newUser.save();
+        await newUser.save();
+        disconnect();
         return NextResponse.json({
             message:"Successfully added",
             success:true

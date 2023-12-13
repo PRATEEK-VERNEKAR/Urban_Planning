@@ -1,4 +1,4 @@
-import {connect} from '@/dbConfig/dbConfig';
+import {connect,disconnect} from '@/dbConfig/dbConfig';
 import Report from '@/models/reportModel';
 const fs = require('fs');
 import { NextRequest,NextResponse } from 'next/server';
@@ -30,8 +30,9 @@ export async function POST(req){
             }
         })
 
-        // console.log(newCity);
-        const savedReport = await newCity.save();
+        await newCity.save();
+
+        disconnect()
 
         return NextResponse.json({
             message:"Report added",

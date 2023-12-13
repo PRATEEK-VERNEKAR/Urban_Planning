@@ -2,7 +2,7 @@ import {writeFile} from 'fs/promises';
 import { NextResponse } from 'next/server';
 import MonitorModel from "../../../models/moniteringModel";
 import Border from '@/models/borderModel';
-import { connect } from '@/dbConfig/dbConfig';
+import { connect ,disconnect} from '@/dbConfig/dbConfig';
 
 export async function POST(req){
     try{
@@ -69,7 +69,7 @@ export async function POST(req){
             await MonitorModel.findOneAndUpdate({regionID},checkIfPresentMonitor,{new:true});
         }
         
-        
+        disconnect();
         
         return NextResponse.json({
             "message":`New image saved for ${regionID}`
