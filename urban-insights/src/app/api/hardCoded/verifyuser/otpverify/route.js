@@ -9,8 +9,13 @@ export async function POST(req) {
     const reqBody = await req.json();
     const { email, otp } = reqBody;
 
+    console.log(email);
+    console.log(otp);
+
     try {
         const email1 = await Otp.findOne({ email: email });
+
+        console.log(email1);
 
         if (email1) {
             if (otp === email1.otp) {
