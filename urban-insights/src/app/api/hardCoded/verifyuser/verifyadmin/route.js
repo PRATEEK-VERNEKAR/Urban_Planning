@@ -26,19 +26,22 @@ export async function POST(req){
         
                     }
                     else{
-                        return NextResponse.json({message:"Error password incorrect",success:false})
+                        return NextResponse.json({message:"Error password incorrect",success:false},{status:403})
                     }
                 }
                 else{
                     return NextResponse.json({
-                        message:"Error Occured",
+                        message:"Unauthorised Access",
                         success:false
-                    })
+                    },{status:403})
                 }
         
             }catch(err){
                 console.log(err);
-        
+                return NextRequest.json({
+                    message:"Server Error",
+                    success:false
+                },{status:500})
             }
         
     

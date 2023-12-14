@@ -17,24 +17,24 @@ export async function POST(req) {
                 return NextResponse.json({
                     message: "Success",
                     success: true
-                });
+                },{status:200});
             } else {
                 return NextResponse.json({
                     message: "Fail",
                     success: false
-                });
+                },{status:403});
             }
         } else {
             return NextResponse.json({
                 message: "Fail",
                 success: false
-            });
+            },{status:403});
         }
     } catch (error) {
         console.error('Error:', error);
         return NextResponse.json({
             message: "Error",
             success: false
-        });
+        },{status:500});
     }
 }
