@@ -23,8 +23,8 @@ const fs=require('fs');
 export async function GET(request,content){
     try{
         connect();
-        console.log("HIEIE")
-        console.log(content.params.city)
+        // console.log("HIEIE")
+        // console.log(content.params.city)
 
         const city=content.params.city;
 
@@ -33,7 +33,7 @@ export async function GET(request,content){
         return NextResponse.json(cityReport);
     }
     catch(error){
-        console.log("Some error getting report")
+        // console.log("Some error getting report")
             return NextResponse.json({message:error.message},{status:500})
         }
 }

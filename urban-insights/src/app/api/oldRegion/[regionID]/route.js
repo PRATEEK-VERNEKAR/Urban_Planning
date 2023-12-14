@@ -1,5 +1,6 @@
 import Border from '../../../../models/borderModel';
-import {connect} from "@/dbConfig/dbConfig";
+
+import {connect,disconnect} from "@/dbConfig/dbConfig";
 import { NextResponse } from 'next/server'
 import MonitorModel from '../../../../models/moniteringModel';
 
@@ -11,17 +12,16 @@ export async function GET(request,content){
         const regionID=content.params.regionID;
         const checkBorderPresent = await Border.findOne({regionID});
 
-        console.log(checkBorderPresent)
         if(!checkBorderPresent){
             return NextResponse.json({
                 message:"No such region monitored"
             },{status:404})
         }
 
-        console.log(regionID)
-        const completeInfo=await MonitorModel.findOne({regionID});
+        // console.log(regionID)
+        await MonitorModel.findOne({regionID});
 
-        console.log(completeInfo["imageData"].length)
+        disconnect();
 
         return NextResponse.json(completeInfo,{status:200})
     }
