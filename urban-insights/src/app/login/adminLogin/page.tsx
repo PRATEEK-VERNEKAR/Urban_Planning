@@ -6,8 +6,8 @@ import { useRouter } from 'next/navigation';
 
 export default function AdminLogin() {
   const [formData, setFormData] = useState({
-    adminusername: '',
-    adminpassword: '',
+    adminEmail: '',
+    adminPassword: '',
   });
   const router = useRouter();
   const handleInputChange = (e: { target: { name: any; value: any; }; }) => {
@@ -42,12 +42,12 @@ export default function AdminLogin() {
       <p style={{ color: '#323643',fontSize:"1.5em",fontWeight:"bold" }}>Admin Login</p>
       <form onSubmit={handleLogin} className='flex flex-col gap-y-4 nform'>
         <div className="flex flex-row nform-input">
-          <label htmlFor="username">Username</label>
+          <label htmlFor="email">email</label>
           <input
             type="text"
-            id="adminusername"
-            name="adminusername"
-            value={formData.adminusername}
+            id="adminEmail"
+            name="adminEmail"
+            value={formData.adminEmail}
             onChange={handleInputChange}
             required
             className="w-full outline-none transparent"
@@ -58,9 +58,9 @@ export default function AdminLogin() {
           <label htmlFor="password">Password</label>
           <input
             type="password"
-            id="adminpassword"
-            name="adminpassword"
-            value={formData.adminpassword}
+            id="adminPassword"
+            name="adminPassword"
+            value={formData.adminPassword}
             onChange={handleInputChange}
             required
             className="w-full outline-none transparent"
