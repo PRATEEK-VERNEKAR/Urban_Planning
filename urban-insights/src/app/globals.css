@@ -249,3 +249,17 @@ footer div{
   width:80px;
   font-size:0.85em;
 }
+
+.font-0_75{
+  font-size:0.75em;
+}
+
+.color-btn{
+  color:#93dfffa3;
+}
+
+.monitor{
+  max-width:calc(100vw - 512px);
+  background-color:#606470;
+  height:100%;
+}

@@ -1,4 +1,5 @@
 import Border from '../../../../models/borderModel';
+
 import {connect,disconnect} from "@/dbConfig/dbConfig";
 import { NextResponse } from 'next/server'
 import MonitorModel from '../../../../models/moniteringModel';
@@ -11,7 +12,6 @@ export async function GET(request,content){
         const regionID=content.params.regionID;
         const checkBorderPresent = await Border.findOne({regionID});
 
-        // console.log(checkBorderPresent)
         if(!checkBorderPresent){
             return NextResponse.json({
                 message:"No such region monitored"

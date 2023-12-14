@@ -54,7 +54,6 @@ export async function POST(req){
 
             console.log(newMonitor)
             const newImageSet = await newMonitor.save();
-            console.log(newImageSet);
         }
         else{
             console.log("\n\nelse\n\n")
@@ -68,7 +67,7 @@ export async function POST(req){
             
             await MonitorModel.findOneAndUpdate({regionID},checkIfPresentMonitor,{new:true});
         }
-        
+       
         disconnect();
         
         return NextResponse.json({
@@ -76,7 +75,6 @@ export async function POST(req){
         },{status:201})
     }
     catch(err){
-        // console.log(err)
         return NextResponse.json({
             "message":`Failed to stored image`
         },{status:500})

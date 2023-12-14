@@ -21,7 +21,14 @@ export async function POST(req) {
             console.log(email);
 
             // Send OTP via email
-            await sendOtpByEmail(email, otp);
+            const err = await sendOtpByEmail(email, otp);
+            if (err) {
+                console.error(err);
+                return NextResponse.json({
+                    message: "Cant send otp",
+                    success: false
+                });
+            }
 
             // Save OTP and email in the database
             const existingOtp = await Otp.findOne({ email: email });
@@ -38,11 +45,11 @@ export async function POST(req) {
                 await newOtp.save();
             }
 
-            // Set a timeout to delete the OTP after 1 minute
+            // Set a timeout to delete the OTP after 5 minute
             setTimeout(async () => {
                 await Otp.findOneAndDelete({ email: email });
                 console.log(`OTP for ${email} deleted after 1 minute.`);
-            }, 60000); // 60000 milliseconds = 1 minute
+            }, 60000*5); // 60000 milliseconds = 1 minute
 
             return NextResponse.json({
                 message: "Success",
@@ -52,7 +59,8 @@ export async function POST(req) {
         } else {
             return NextResponse.json({
                 message: "Fail",
-                success: false
+                success: false,
+                user:null
             });
         }
     } else {
@@ -83,12 +91,12 @@ async function sendOtpByEmail(email, otp) {
         text: `Your OTP code is: ${otp}`
     };
 
-    transporter.sendMail(mailOptions, (error, info) => {
+   await transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             console.error(error);
-            return console.log(error);
+            return error
         } else {
-            console.log("Email sent: " + info.response);
+            return null
         }
     });
 }
