@@ -35,6 +35,12 @@ const borderSchema=mongoose.Schema({
             },
             emails:[String]
         }
+    ],
+    image:[
+        {
+            data:Buffer,
+            contentType:String
+        }
     ]
 })
 
