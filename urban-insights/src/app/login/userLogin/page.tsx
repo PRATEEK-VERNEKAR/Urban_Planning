@@ -13,6 +13,10 @@ export default function LoginForm() {
     deptpassword: "",
   });
 
+  const [OTP,setOTP]=useState("");
+
+  const [firstStepDone,setFirstStepDone]=useState(false);
+
   const router = useRouter();
 
   const handleInputChange = (e: { target: { name: any; value: any; }; }) => {
@@ -31,83 +35,107 @@ export default function LoginForm() {
 
       if (response.data.success) {
         console.log("Login successful!");
-
-        // Redirect to the OTP verification page after successful login
-        router.push('http://localhost:3000/login/otpverify');
+		setFirstStepDone(true);
       } else {
         console.error("Login failed:", response.data.message);
+		setFormData({username:"",password:"",deptpassword:"",deptusername:""});
       }
     } catch (error) {
-      console.error("Error during login:", error);
+		setFormData({username:"",password:"",deptpassword:"",deptusername:""});
+	    console.error("Error during login:", error);
     }
   };
 
   return (
     <div>
       <p style={{ color: '#323643',fontSize:"1.5em",fontWeight:"bold" }}>User Login</p>
+      {
+        !firstStepDone?(
+          <div>
+            <form onSubmit={handleLogin} className='flex flex-col gap-y-4 nform'>
+              <div className="flex flex-row nform-input">
+                <label htmlFor="username">Username:</label>
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full outline-none transparent"
+                />
+              </div>
 
-      {/* Login Form */}
-      <form onSubmit={handleLogin} className='flex flex-col gap-y-4 nform'>
-        <div className="flex flex-row nform-input">
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={formData.username}
-            onChange={handleInputChange}
-            required
-            className="w-full outline-none transparent"
-          />
-        </div>
+              <div className="flex flex-row nform-input">
+                <label htmlFor="password">Password:</label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full outline-none transparent"
+                />
+              </div>
 
-        <div className="flex flex-row nform-input">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleInputChange}
-            required
-            className="w-full outline-none transparent"
-          />
-        </div>
+              <div className="flex flex-row items-center gap-x-2">
+                <div className="line w-full"></div>
+                <div className="dept">Department</div>
+                <div className="line w-full"></div>
+              </div>
 
-        <div className="flex flex-row items-center gap-x-2">
-          <div className="line w-full"></div>
-          <div className="dept">Department</div>
-          <div className="line w-full"></div>
-        </div>
+              <div className="flex flex-row nform-input">
+                <label htmlFor="deptusername">Username</label>
+                <input
+                  type="text"
+                  id="deptusername"
+                  name="deptusername"
+                  value={formData.deptusername}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full outline-none transparent"
+                />
+              </div>
 
-        <div className="flex flex-row nform-input">
-          <label htmlFor="deptusername">Username</label>
-          <input
-            type="text"
-            id="deptusername"
-            name="deptusername"
-            value={formData.deptusername}
-            onChange={handleInputChange}
-            required
-            className="w-full outline-none transparent"
-          />
-        </div>
+              <div className="flex flex-row nform-input">
+                <label htmlFor="deptpassword">Password</label>
+                <input
+                  type="password"
+                  id="deptpassword"
+                  name="deptpassword"
+                  value={formData.deptpassword}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full outline-none transparent"
+                />
+              </div>
 
-        <div className="flex flex-row nform-input">
-          <label htmlFor="deptpassword">Password</label>
-          <input
-            type="password"
-            id="deptpassword"
-            name="deptpassword"
-            value={formData.deptpassword}
-            onChange={handleInputChange}
-            required
-            className="w-full outline-none transparent"
-          />
-        </div>
+              <button type="submit" className="nform-send login-send mx-auto">Login</button>
+            </form>
+          </div>
+        ):
+        (
+          <div>
+            <form onSubmit={handleLogin} className='flex flex-col gap-y-4 nform'>
+              <div className="flex flex-row nform-input">
+                <label htmlFor="otp">OTP:</label>
+                <input
+                  type="password"
+                  id="otp"
+                  name="otp"
+                  value={OTP}
+                  onChange={(e)=>{setOTP(e.target.value)}}
+                  required
+                  className="w-full outline-none transparent"
+                />
+              </div>
+              <button type="submit" className="nform-send login-send mx-auto">Login</button>
+            </form>
+          </div>
+        )
+      }
 
-        <button type="submit" className="nform-send login-send mx-auto">Login</button>
-      </form>
     </div>
   );
 }

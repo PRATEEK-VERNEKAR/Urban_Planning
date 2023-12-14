@@ -10,6 +10,10 @@ export async function POST(req) {
     let email;
     const reqBody = await req.json();
     const { deptusername, deptpassword, username, password } = reqBody;
+
+    console.log(reqBody);
+
+
     const user = await Authentication.findOne({ username: username }) // Set timeout to 30 seconds
 
     if (user) {
@@ -27,7 +31,7 @@ export async function POST(req) {
                 return NextResponse.json({
                     message: "Cant send otp",
                     success: false
-                });
+                }); 
             }
 
             // Save OTP and email in the database
