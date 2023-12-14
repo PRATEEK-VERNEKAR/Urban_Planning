@@ -89,17 +89,20 @@ export default function LoginForm() {
           />
         </div>
 
-        <div className="flex flex-row nform-input">
-          <label htmlFor="deptpassword">Password</label>
-          <input
-            type="password"
-            id="deptpassword"
-            name="deptpassword"
-            value={formData.deptpassword}
-            onChange={handleInputChange}
-            required
-            className="w-full outline-none transparent"
-          />
+        <div className="flex flex-col gap-y-1">
+          <div className="flex flex-row nform-input">
+            <label htmlFor="deptpassword">Password</label>
+            <input
+              type="password"
+              id="deptpassword"
+              name="deptpassword"
+              value={formData.deptpassword}
+              onChange={handleInputChange}
+              required
+              className="w-full outline-none transparent"
+            />
+          </div>
+          <p className="block font-0_75" style={{opacity:"0.75"}}>** Are you <a href="#" className="color-btn" style={{textDecoration:"underline",fontWeight:"bold"}}>Admin</a> ?</p>
         </div>
 
         <button type="submit" className="nform-send login-send mx-auto">Login</button>
