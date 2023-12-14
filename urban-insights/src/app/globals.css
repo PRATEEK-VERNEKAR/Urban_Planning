@@ -19,6 +19,25 @@
   }
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: transparent;
+}
+
 body{
   color: rgb(var(--foreground-rgb));
   background-color: #60647090;
@@ -258,8 +277,60 @@ footer div{
   color:#93dfffa3;
 }
 
-.monitor{
-  max-width:calc(100vw - 512px);
-  background-color:#606470;
-  height:100%;
+.monitor-header{
+  font-size:1.5em;
+  color:#323643;
+  font-weight: bold;
+}
+
+
+.monitor-container{
+  background-color:#606470c3;
+  border-radius: 4px;
+  padding:16px 32px 32px 16px;
+}
+
+.imagebox{
+  border-radius:8px;
+  overflow: hidden;
+  background-color:#f7f7f7a8;
+  cursor:pointer;
+  height:212px;
+}
+
+.imagebox img{
+  filter:brightness(0.8);
+}
+
+.imagebox div{
+  padding:4px 8px 4px 8px;
+  font-weight: bold;
+  color:#323643;
+  filter: contrast(0.4);
+}
+
+
+.imagebox:hover{
+  transform: translate3D(-20px);
+  box-shadow: 0px 0px 15px 1px #323643;
+}
+
+.imagebox:hover img{
+  filter: brightness(0.5);
+}
+
+
+.imagebox:hover div{
+  filter: contrast(1);
+}
+
+.place{
+  background-color:#606470c3;
+  border-radius:6px;
+  overflow: hidden;
+}
+
+.place-container{
+  overflow-x:scroll;
+  filter:brightness(50%);
 }

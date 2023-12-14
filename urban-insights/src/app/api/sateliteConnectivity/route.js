@@ -2,7 +2,7 @@ import {writeFile} from 'fs/promises';
 import { NextResponse } from 'next/server';
 import MonitorModel from "../../../models/moniteringModel";
 import Border from '@/models/borderModel';
-import { connect } from '@/dbConfig/dbConfig';
+import { connect ,disconnect} from '@/dbConfig/dbConfig';
 
 export async function POST(req){
     try{
@@ -54,29 +54,29 @@ export async function POST(req){
 
             console.log(newMonitor)
             const newImageSet = await newMonitor.save();
-            // console.log(newImageSet);
+            console.log(newImageSet);
         }
         else{
             console.log("\n\nelse\n\n")
 
             const updateImageData={dateTime:Date.now(),image:{data:buffer,contentType:"image/jpg"},predicted:false}
 
-            console.log(updateImageData)
-            console.log("\n\n\n\n")
+            // console.log(updateImageData)
+            // console.log("\n\n\n\n")
             // console.log(checkIfPresentMonitor['imageData'])
             checkIfPresentMonitor['imageData'].push(updateImageData)
             
             await MonitorModel.findOneAndUpdate({regionID},checkIfPresentMonitor,{new:true});
         }
         
-        
+        disconnect();
         
         return NextResponse.json({
             "message":`New image saved for ${regionID}`
         },{status:201})
     }
     catch(err){
-        console.log(err)
+        // console.log(err)
         return NextResponse.json({
             "message":`Failed to stored image`
         },{status:500})

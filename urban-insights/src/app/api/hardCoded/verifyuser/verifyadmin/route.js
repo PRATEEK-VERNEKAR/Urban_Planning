@@ -1,13 +1,10 @@
-import {connect} from '@/dbConfig/dbConfig';
 
-import Authentication from '@/models/auth.js';
 const bcrypt = require('bcrypt');
 const fs = require('fs');
 import { NextRequest,NextResponse } from 'next/server';
 
 export async function POST(req){
         try{
-            connect();
                 const reqBody = await req.json();
                 // const reqBody = await req.json();
                 const username = process.env.USERNAME;
@@ -38,12 +35,6 @@ export async function POST(req){
                         success:false
                     })
                 }
-        
-              
-                
-        
-        
-        
         
             }catch(err){
                 console.log(err);

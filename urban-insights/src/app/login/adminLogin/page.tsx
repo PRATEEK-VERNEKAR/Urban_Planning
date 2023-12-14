@@ -27,7 +27,6 @@ export default function AdminLogin() {
 
       if (response.data.success) {
         router.push('http://localhost:3000/login/addUser');
-               
       } else {
         console.error('Login failed:', response.data.message);
     
