@@ -3,6 +3,10 @@ import { connect, disconnect } from '@/dbConfig/dbConfig'
 import Authentication from '@/models/auth'
 import { NextRequest, NextResponse } from 'next/server'
 
+const bcrypt = require('bcrypt');
+const fs = require('fs');
+import { NextRequest,NextResponse } from 'next/server';
+
 export async function POST(req) {
   try {
     connect()
