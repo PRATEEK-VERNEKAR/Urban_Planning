@@ -5,7 +5,6 @@ import { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-
 export default function LoginForm() {
   const [formData, setFormData] = useState({
     username: "",
