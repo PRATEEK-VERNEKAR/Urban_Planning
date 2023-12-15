@@ -18,14 +18,14 @@ export async function GET(request,content){
             },{status:404})
         }
 
-        // console.log(regionID)
-        await MonitorModel.find({regionID});
-
+        const completeInfo=await MonitorModel.findOne({regionID});
+        console.log(typeof(completeInfo))
         // disconnect();
 
-        return NextResponse.json(completeInfo,{status:200})
+        return NextResponse.json({completeInfo},{status:200})
     }
     catch(err){
+        console.log(err)
         return NextResponse.json({
             message:"Cant access data"
         },{status:500})
