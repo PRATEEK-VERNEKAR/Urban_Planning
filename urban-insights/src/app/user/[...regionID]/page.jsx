@@ -27,7 +27,7 @@ export default function UserDashboard({params}){
             {
                 allMatchingRegions.map((singleRegion,index)=>{
                     return(
-                        <div key={index} className='border-2' onClick={router.push(`/user/eachRegion/${singleRegion.regionID}`)}>
+                        <div key={index} className='border-2' onClick={()=>{router.push(`/user/eachRegion/${singleRegion.regionID}`)}}>
                             <p>Name:{singleRegion.name}</p>
                             <p>Area:{singleRegion.area.$numberDecimal}</p>
                             <p>Border Length:{singleRegion.borderLength.$numberDecimal}</p>
