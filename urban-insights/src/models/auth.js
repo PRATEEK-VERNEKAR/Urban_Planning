@@ -21,7 +21,7 @@ const authSchema = new mongoose.Schema({
         type: String,
         required: [true, 'dept password is required']
     },
-    assigned:[String],
+    assignedRegionID:[String],
     isAdmin:{
         type:Boolean,
         default:false

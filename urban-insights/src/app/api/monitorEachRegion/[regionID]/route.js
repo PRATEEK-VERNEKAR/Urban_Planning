@@ -19,9 +19,9 @@ export async function GET(request,content){
         }
 
         // console.log(regionID)
-        await MonitorModel.findOne({regionID});
+        await MonitorModel.find({regionID});
 
-        disconnect();
+        // disconnect();
 
         return NextResponse.json(completeInfo,{status:200})
     }

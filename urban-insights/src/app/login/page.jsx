@@ -83,12 +83,20 @@ export default function LoginForm() {
     setFirstStepDone(true);
 
     try{
-      const response = await axios.post("http://localhost:3000/api/hardCoded/verifyuser/otpverify",{email:secondFormData.email,otp:OTP});
+      const optResponse = await axios.post("http://localhost:3000/api/hardCoded/verifyuser/otpverify",{email:secondFormData.email,otp:OTP});
 
 
-      if(response.data.success){
+      if(optResponse.data.success){
+
+        const  getRegionID = await 
         console.log("Otp successful");
-        router.push(`/oldRegion/`);
+        let userDashBoardURL="user";
+        secondFormData.regionIDs.map((singleRegionID)=>{
+          userDashBoardURL=userDashBoardURL+`/${singleRegionID}`
+        })
+
+        console.log(userDashBoardURL);
+        router.push(userDashBoardURL);
       }
       
     }
