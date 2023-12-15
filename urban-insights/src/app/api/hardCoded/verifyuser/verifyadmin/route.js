@@ -1,25 +1,30 @@
 const fs = require('fs')
 import { connect, disconnect } from '@/dbConfig/dbConfig'
 import Authentication from '@/models/auth'
-import { NextRequest, NextResponse } from 'next/server'
 
 const bcrypt = require('bcrypt');
-const fs = require('fs');
 import { NextRequest,NextResponse } from 'next/server';
 
 export async function POST(req) {
   try {
     connect()
     const reqBody = await req.json()
-    const password = process.env.PASSWORD
-    console.log(password)
-    const { adminEmail, adminPassword } = reqBody
-    const user = await Authentication.find({ email: adminEmail })
-    disconnect()
-    const isvalid = await bcrypt.compare(user.password, adminPassword)
-    if (user && user.isAdmin && isvalid) {
+    const {username,password}=reqBody;
+    const rpassword = process.env.PASSWORD;
+    const rusername = process.env.USERNAMEE;
+    console.log(process.env.USERNAME);
+
+    // console.log(password)
+    // const { adminEmail, adminPassword } = reqBody
+    // const user = await Authentication.find({ email: adminEmail })
+    // // disconnect()
+    // const isvalid = await bcrypt.compare(user.password, adminPassword)
+    
+    console.log(username,password,rpassword,rusername);
+
+    if (username===rusername && password===rpassword) {
       return NextResponse.json({
-        message: 'Sucess',
+        message: 'Success',
         success: true,
       })
     } else {

@@ -161,7 +161,8 @@ export default function LoginForm() {
                   className="w-full outline-none transparent"
                 />
               </div>
-
+              
+              <p className="block font-0_75" style={{opacity:"0.75"}}>** Are you <a href="/login/adminLogin" className="color-btn" style={{textDecoration:"underline",fontWeight:"bold"}}>Admin</a> ?</p>
               <button type="submit" className="nform-send login-send mx-auto">Login</button>
             </form>
           </div>
