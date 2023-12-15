@@ -6,8 +6,8 @@ import { useRouter } from 'next/navigation';
 
 export default function AdminLogin() {
   const [formData, setFormData] = useState({
-    adminEmail: '',
-    adminPassword: '',
+    username: '',
+    password: '',
   });
   const router = useRouter();
   const handleInputChange = (e: { target: { name: any; value: any; }; }) => {
@@ -26,7 +26,7 @@ export default function AdminLogin() {
       const response = await axios.post('http://localhost:3000/api/hardCoded/verifyuser/verifyadmin', formData);
 
       if (response.data.success) {
-        router.push('http://localhost:3000/login/addUser');
+        router.push('http://localhost:3000/admin/');
       } else {
         console.error('Login failed:', response.data.message);
     
@@ -45,9 +45,9 @@ export default function AdminLogin() {
           <label htmlFor="email">email</label>
           <input
             type="text"
-            id="adminEmail"
-            name="adminEmail"
-            value={formData.adminEmail}
+            id="username"
+            name="username"
+            value={formData.username}
             onChange={handleInputChange}
             required
             className="w-full outline-none transparent"
@@ -58,9 +58,9 @@ export default function AdminLogin() {
           <label htmlFor="password">Password</label>
           <input
             type="password"
-            id="adminPassword"
-            name="adminPassword"
-            value={formData.adminPassword}
+            id="password"
+            name="password"
+            value={formData.password}
             onChange={handleInputChange}
             required
             className="w-full outline-none transparent"
