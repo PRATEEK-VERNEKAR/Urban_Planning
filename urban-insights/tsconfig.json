@@ -22,6 +22,10 @@
       "@/*": ["./src/*"]
     }
   },
+<<<<<<< HEAD
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts","**/*.ts", "src/app/api/hardCoded/getReport/[city]/route.js", "src/app/twoOptions/newLocation/btn.jsx", "src/app/twoOptions/newLocation/page.jsx","src/dbConfig/dbConfig.ts", "src/app/login/page.jsx"],
+=======
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts","**/*.ts", "src/app/api/hardCoded/getReport/[city]/route.js", "src/app/twoOptions/newLocation/btn.jsx", "src/app/twoOptions/newLocation/page.jsx","src/dbConfig/dbConfig.ts", "src/app/ui/footer/footer.tsx", "src/app/login/page.tsx"],
+>>>>>>> main
   "exclude": ["node_modules"]
 }

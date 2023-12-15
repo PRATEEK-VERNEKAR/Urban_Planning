@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function ImageBox(props){
     return (
-        <div>
+        <div className="imagebox">
             <Image
             src={props.src}
             width={props.width}
