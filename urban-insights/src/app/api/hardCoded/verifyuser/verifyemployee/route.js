@@ -53,7 +53,7 @@ export async function POST(req) {
             setTimeout(async () => {
                 await Otp.findOneAndDelete({ email: email });
                 console.log(`OTP for ${email} deleted after 1 minute.`);
-            }, 60000*5); // 60000 milliseconds = 1 minute
+            },60000); // 60000 milliseconds = 1 minute
 
             return NextResponse.json({
                 message: "Success",
@@ -76,7 +76,7 @@ export async function POST(req) {
 }
 
 function generateOtp() {
-    return Math.floor(1000 + Math.random() * 9000).toString();
+    return Math.floor(100000 + Math.random() * 900000).toString();
 }
 
 async function sendOtpByEmail(email, otp) {
@@ -95,7 +95,7 @@ async function sendOtpByEmail(email, otp) {
         text: `Your OTP code is: ${otp}`
     };
 
-   await transporter.sendMail(mailOptions, (error, info) => {
+    transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             console.error(error);
             return error

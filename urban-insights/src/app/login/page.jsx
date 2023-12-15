@@ -1,9 +1,10 @@
 // LoginForm.js
 "use client"
 
-import { useState } from "react";
+import { useState,useEffect} from "react";
 import axios from "axios";
-import { useRouter } from 'next/navigation';
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
   const [firstFormData, setFirstFormData] = useState({
@@ -17,14 +18,38 @@ export default function LoginForm() {
     email:"",
     regionIDs:[""]
   })
-
+  
   const [OTP,setOTP]=useState("");
-
   const [firstStepDone,setFirstStepDone]=useState(false);
+  const [startTimer,setStartTimer]=useState(false);
+  const [seconds,setSeconds]=useState(0);
+
+  useEffect(()=>{
+    if(startTimer){
+        const intervalID=setInterval(()=>{
+          setSeconds((prevSeconds)=>{
+          const newSecond=prevSeconds+1;
+          
+          if(newSecond>=60){
+            setStartTimer(false);
+            clearInterval(intervalID);
+          }
+
+          console.log("HI")
+
+          return newSecond;
+        });
+      },1000)
+
+      return ()=>clearInterval(intervalID);
+    }
+
+  },[startTimer]);
+
 
   const router = useRouter();
 
-  const handleInputChange = (e: { target: { name: any; value: any; }; }) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFirstFormData((prevData) => ({
       ...prevData,
@@ -32,7 +57,7 @@ export default function LoginForm() {
     }));
   };
 
-  const handleLoginFirst = async (e: { preventDefault: () => void; }) => {
+  const handleLoginFirst = async (e) => {
     e.preventDefault();
 
     try {
@@ -41,11 +66,11 @@ export default function LoginForm() {
       if (response.data.success) {
         console.log("Login successful!");
 		    setFirstStepDone(true);
+        setStartTimer(true);
         setSecondFormData({email:response.data.user.email,regionIDs:response.data.user.assigned})
-        
       } else {
         console.error("Login failed:", response.data.message);
-		    setFirstFormData({username:"",password:"",deptpassword:"",deptusername:""});
+		    // setFirstFormData({username:"",password:"",deptpassword:"",deptusername:""});
       }
     } catch (error) {
 		  setFirstFormData({username:"",password:"",deptpassword:"",deptusername:""});
@@ -53,11 +78,13 @@ export default function LoginForm() {
     }
   };
 
-  const handleLoginSecond = async (e:{preventDefault:()=>void;})=>{
+  const handleLoginSecond = async (e)=>{
     e.preventDefault();
+    setFirstStepDone(true);
 
     try{
       const response = await axios.post("http://localhost:3000/api/hardCoded/verifyuser/otpverify",{email:secondFormData.email,otp:OTP});
+
 
       if(response.data.success){
         console.log("Otp successful");
@@ -154,6 +181,7 @@ export default function LoginForm() {
                   className="w-full outline-none transparent"
                 />
               </div>
+              {seconds<60?<span>{seconds}</span>:<button onClick={(e)=>{setStartTimer(false); setSeconds(0); handleLoginFirst(e);}}>Resend Code</button>}
               <button type="submit" className="nform-send login-send mx-auto">Login</button>
             </form>
           </div>
