@@ -60,7 +60,7 @@ export async function POST(req){
 
             const updateImageData={dateTime:Date.now(),image:{data:buffer,contentType:"image/jpg"},predicted:false}
 
-            // console.log(updateImageData)
+            console.log(updateImageData)
             // console.log("\n\n\n\n")
             // console.log(checkIfPresentMonitor['imageData'])
             checkIfPresentMonitor['imageData'].push(updateImageData)
