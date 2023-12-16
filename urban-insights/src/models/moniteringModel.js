@@ -17,7 +17,7 @@ const moniteringModelSchema=mongoose.Schema({
                 data:Buffer,
                 contentType:String
             },
-            "classes":[mongoose.Types.Decimal128],
+            "classes":[Number],
             "predicted":Boolean
         }
     ]

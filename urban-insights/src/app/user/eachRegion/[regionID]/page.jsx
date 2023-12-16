@@ -1,57 +1,3 @@
-// "use client";
-
-// import axios from 'axios';
-// import { useEffect, useState } from 'react';
-
-// const BinaryImageDisplay = ({binaryImageData,mimeType})=>{
-//     const [dataURL,setDataURL]=useState('');
-
-//     useEffect(()=>{
-//         const base64Image=btoa(String.fromCharCode.apply(null,binaryImageData));
-
-//         const newDataURL=`data:${mimeType};base64,${base64Image}`;
-
-//         setDataURL(newDataURL);
-//     },[binaryImageData,mimeType])
-
-//     return <img src={dataURL} alt='Binary Image'/>
-// }
-
-// export default function MonitorEachRegion({params}){
-//     console.log(params.regionID);
-
-//     const myFunc=async ()=>{
-//         const monitoredRegionInfo=await axios.get(`http://localhost:3000/api/monitorEachRegion/${params.regionID}`);
-//         console.log(monitoredRegionInfo.data.completeInfo.imageData);
-//         setCurrentRegion(monitoredRegionInfo.data.completeInfo.imageData);
-//     }
-
-//     useEffect(()=>{myFunc()},[])
-
-//     const [currentRegion,setCurrentRegion]=useState([{dateTime:"",predicted:false,classes:[],image:{contentType:"",data:{type:"",data:[]}}}]);
-
-//     let binaryImageData;
-//     return(
-//         <>
-//             {
-//                 currentRegion.map((data,index)=>{
-//                     return(
-//                         <div key={index}>
-//                             {console.log(data.image.data.data)}
-//                             {/* <p>{data.image.data}</p> */}
-//                             {
-//                                 binaryImageData=Uint8Array.from(data.image.data.data)
-//                             }
-//                             <BinaryImageDisplay binaryImageData={binaryImageData} mimeType='image/jpg'/>
-//                         </div>
-//                     )
-//                 })
-//             }   
-//         </>
-//     )
-// }
-
-
 "use client";
 
 import axios from 'axios';
@@ -76,11 +22,9 @@ const BinaryImageDisplay = ({ binaryImageData, mimeType }) => {
 }
 
 export default function MonitorEachRegion({ params }) {
-  console.log(params.regionID);
 
   const myFunc = async () => {
     const monitoredRegionInfo = await axios.get(`http://localhost:3000/api/monitorEachRegion/${params.regionID}`);
-    console.log(monitoredRegionInfo.data.completeInfo.imageData);
     setCurrentRegion(monitoredRegionInfo.data.completeInfo.imageData);
   }
 
@@ -88,19 +32,30 @@ export default function MonitorEachRegion({ params }) {
 
   const [currentRegion, setCurrentRegion] = useState([{ dateTime: "", predicted: false, classes: [], image: { contentType: "", data: { type: "", data: [] } } }]);
 
+  const countOccurances=(arr,num)=>{
+    return arr.filter((temp)=>{return +temp.$numberDecimal===num}).length
+  }
+
   return (
     <>
       {
         currentRegion.map((data, index) => {
           return (
             <div key={index}>
-              {console.log(data.image.data.data)}
               {/* <p>{data.image.data}</p> */}
               {
-                // Ensure that binaryImageData is defined before rendering BinaryImageDisplay
                 data.image.data.data &&
                 <BinaryImageDisplay binaryImageData={Uint8Array.from(data.image.data.data)} mimeType='image/jpg' />
               }
+              <div>{data.dateTime}</div>
+              <div>
+                <p>Aircrafts : {countOccurances(data.classes,0)}</p>
+                <p>Buildings : {countOccurances(data.classes,1)}</p>
+                <p>Grounds : {countOccurances(data.classes,2)}</p>
+                <p>Roads : {countOccurances(data.classes,3)}</p>
+                <p>Vehicles : {countOccurances(data.classes,4)}</p>
+                <p>Waters : {countOccurances(data.classes,5)}</p>
+              </div>
             </div>
           )
         })
