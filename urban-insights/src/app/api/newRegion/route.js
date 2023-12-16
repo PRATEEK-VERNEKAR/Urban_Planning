@@ -13,7 +13,7 @@ export async function POST(req,res){
         // console.log("\n\nINDIA\n\n");
         const savedNewRegion = await newRegion.save()
 
-        disconnect()
+        // disconnect()
         return NextResponse.json({
             message:"New Region Added",
             savedNewRegion

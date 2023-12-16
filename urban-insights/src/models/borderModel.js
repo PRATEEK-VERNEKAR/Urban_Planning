@@ -44,7 +44,8 @@ const borderSchema=mongoose.Schema({
             },
             classes:[Number]    
         }
-    ]
+    ],
+    threshold:[Number]
 })
 
 const Border=mongoose.models.borders || mongoose.model('borders',borderSchema);
