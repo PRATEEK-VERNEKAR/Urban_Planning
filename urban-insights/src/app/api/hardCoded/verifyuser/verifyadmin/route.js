@@ -7,6 +7,8 @@ import { NextRequest,NextResponse } from 'next/server';
 
 export async function POST(req) {
   try {
+
+    await connect()
     const reqBody = await req.json()
     const {username,password}=reqBody;
     const rpassword = process.env.PASSWORD;
@@ -16,7 +18,7 @@ export async function POST(req) {
     // console.log(password)
     // const { adminEmail, adminPassword } = reqBody
     // const user = await Authentication.find({ email: adminEmail })
-    // // disconnect()
+    await disconnect()
     // const isvalid = await bcrypt.compare(user.password, adminPassword)
     
 

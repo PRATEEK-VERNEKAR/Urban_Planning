@@ -31,6 +31,7 @@ export async function GET(request,content){
 
         await disconnect()
 
+
         return NextResponse.json(cityReport);
     }
     catch(error){

@@ -13,7 +13,7 @@ export async function GET(request,content){
          console.log("user at backend is",user)
          console.log("user at content  is",content)
          const allocatedRegions = user.allocatedRegions;
-        //  if (regionID in allocatedRegions){
+
         const regionID=content.params.regionID;
         const checkBorderPresent = await Border.findOne({regionID});
 

@@ -14,7 +14,10 @@ export async function POST(req,res){
 
         const allMatchRegions=await Border.find({regionID:{$in:regionIDs}});
 
-        await disconnect()
+
+        await disconnect();
+        
+        console.log(allMatchRegions.length);
 
         return NextResponse.json({
             allMatchRegions,

@@ -18,6 +18,13 @@ export async function POST(req, res) {
     for (const singleImage of normalImages) {
       console.log(singleImage._id)
 
+      await connect();
+
+      const {regionID}=await req.json();
+      const normalImagesRes=await Border.find({regionID},{normalImages:1});
+
+      await disconnect()
+
       const modelPrediction = await axios.post(
         'http://localhost:8080/predict',
         {
