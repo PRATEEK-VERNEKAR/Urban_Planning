@@ -9,6 +9,7 @@ import { USER_TOKEN } from '../../utils/consts'
 
 export default function LoginForm() {
   const [firstFormData, setFirstFormData] = useState({
+
     username: '',
     password: '',
     deptusername: '',
@@ -95,6 +96,7 @@ export default function LoginForm() {
   const handleLoginSecond = async (e) => {
     e.preventDefault()
     setFirstStepDone(true)
+
 
     try {
       console.log(secondFormData.email)

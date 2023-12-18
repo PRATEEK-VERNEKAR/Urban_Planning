@@ -7,6 +7,7 @@ const fs = require('fs')
 import { NextRequest, NextResponse } from 'next/server'
 import signToken from '@/utils/signToken'
 
+
 export async function POST(req) {
   const reqBody = await req.json()
   const { email, otp } = reqBody

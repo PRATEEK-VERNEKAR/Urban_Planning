@@ -39,6 +39,7 @@ export async function POST(req,res){
         console.log(updateRes);
 
         await disconnect()
+
         return NextResponse.json({
             "message":"Normal images stored successfully",
             success:true
