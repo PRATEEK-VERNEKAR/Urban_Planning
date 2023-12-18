@@ -1,0 +1,3 @@
+after login store the token in coookie 
+then if user press login again fetch the token and send to dashboard page
+in dashboard page check if token present if token is present fetch the regionIds and continue

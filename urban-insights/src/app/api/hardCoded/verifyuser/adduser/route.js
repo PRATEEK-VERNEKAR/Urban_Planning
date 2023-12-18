@@ -2,7 +2,6 @@ import { connect, disconnect } from '@/dbConfig/dbConfig'
 
 import Authentication from '@/models/auth.js'
 const bcrypt = require('bcrypt')
-import { signToken } from '@/utils/jwt.js'
 const fs = require('fs')
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -35,15 +34,8 @@ export async function POST(req) {
       assignedRegionID: assignedRegionID,
       isAdmin: isAdmin,
     })
-    const savedUser = await newUser.save()
-    const token = await signToken({
-      _id: savedUser._id,
-      email: savedUser.email,
-      username: savedUser.username,
-      deptusername: savedUser.deptusername,
-      assignedRegionID: savedUser.assignedRegionID,
-      isAdmin: savedUser.isAdmin,
-    })
+    await newUser.save()
+    
     await disconnect()
     return NextResponse.json({
       message: 'Successfully added',

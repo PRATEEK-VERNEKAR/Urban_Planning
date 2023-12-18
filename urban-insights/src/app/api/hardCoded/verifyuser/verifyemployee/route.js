@@ -1,9 +1,12 @@
 import { connect,disconnect } from '@/dbConfig/dbConfig';
 import Otp from '@/models/otp';
 import Authentication from '@/models/auth.js';
+
+
 const bcrypt = require('bcrypt');
 import nodemailer from 'nodemailer';
 import { NextRequest, NextResponse } from 'next/server';
+import signToken from '@/utils/signToken';
 
 export async function POST(req) {
     await connect();
@@ -11,9 +14,16 @@ export async function POST(req) {
     const reqBody = await req.json();
     const { deptusername, deptpassword, username, password } = reqBody;
 
-
-
     const user = await Authentication.findOne({ username: username }) // Set timeout to 30 seconds
+
+    const token = await signToken({
+      _id: user._id,
+      email: user.email,
+      username: user.username,
+      deptusername: user.deptusername,
+      assignedRegionID: user.assignedRegionID,
+      isAdmin: user.isAdmin,
+    })
 
     if (user) {
         const check = await bcrypt.compare(deptpassword, user.deptpassword);
@@ -25,11 +35,13 @@ export async function POST(req) {
 
             // Send OTP via email
             const err = await sendOtpByEmail(email, otp);
+            console.log("otp ",otp)
             if (err) {
                 console.error(err);
                 return NextResponse.json({
                     message: "Cant send otp",
-                    success: false
+                    success: false,
+                    token:""
                 }); 
             }
 
@@ -52,13 +64,15 @@ export async function POST(req) {
             setTimeout(async () => {
                 await Otp.findOneAndDelete({ email: email });
                 console.log(`OTP for ${email} deleted after 1 minute.`);
-            },60000); // 60000 milliseconds = 1 minute
+            },90000); // 90000 milliseconds = 1 minute
 
             await disconnect()
             return NextResponse.json({
                 message: "Success",
                 success: true,
-                user:user
+                token,
+                email,
+                assignedRegionID:user.assignedRegionID
             });
         } else {
             return NextResponse.json({

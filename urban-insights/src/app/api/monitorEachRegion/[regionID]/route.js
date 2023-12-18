@@ -7,7 +7,11 @@ import MonitorModel from '../../../../models/moniteringModel';
 
 export async function GET(request,content){
     try{
+
         await connect();
+         const user = JSON.parse(request.headers.get('user'))
+         const allocatedRegions = user.allocatedRegions;
+        //  if (regionID in allocatedRegions){
         console.log(content.params.regionID)
         const regionID=content.params.regionID;
         const checkBorderPresent = await Border.findOne({regionID});

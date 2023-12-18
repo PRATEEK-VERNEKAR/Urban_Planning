@@ -8,6 +8,8 @@ export async function POST(req,res){
 
         const {regionIDs}=await req.json();
 
+        console.log("regionIds",regionIDs)
+
         console.log(regionIDs);
 
         const allMatchRegions=await Border.find({regionID:{$in:regionIDs}});

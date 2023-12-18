@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { jwtVerify } from 'jose'
 import { UserRequest, UserTypes } from './utils/types'
+import { decodeUser } from './utils/decodeUser'
 
 export const corsHeaders = {
   // put the domain here
@@ -14,9 +15,8 @@ export async function middleware(req: UserRequest, res: NextResponse) {
     return NextResponse.json({}, { headers: corsHeaders })
   }
 
-  const secret = new TextEncoder().encode(
-    'cc7e0d44fd473002f1c42167459001140ec6389b7353f8088f4d9a95f2f596f2'
-  )
+  console.log("middleware called")
+
   // Get the authorization header
   const authorization = req.headers.get('authorization')
 
@@ -24,25 +24,14 @@ export async function middleware(req: UserRequest, res: NextResponse) {
     // Bearer xxx => xxx
     const token = authorization.slice(7, authorization.length)
     try {
-      // Verify the token and decode the payload
-      const { payload, protectedHeader } = await jwtVerify(token, secret, {
-        issuer: 'urn:example:issuer',
-        audience: 'urn:example:audience',
-      })
-      const user = {
-        _id: payload._id,
-        username: payload.username,
-        deptusername: payload.deptusername,
-        email: payload.email,
-        assignedRegionID: payload.assignedRegionID,
-        isAdmin: payload.isAdmin,
-      }
+      const user = await decodeUser(token)
       req.user = user as UserTypes
       req.headers.set('user', JSON.stringify(user))
       const res = NextResponse.next()
       res.headers.set('user', JSON.stringify(user))
       return res
     } catch (err) {
+      console.log("error at middleware")
       return NextResponse.json({ message: err })
     }
   }
