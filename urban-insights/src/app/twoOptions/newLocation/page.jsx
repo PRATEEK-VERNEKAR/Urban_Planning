@@ -16,10 +16,8 @@ export default function NewLocation(){
     const changeStateArray = useCallback((e)=>{
         let value = e.target.alt;  
         let index = stateArray.indexOf(value)
-        console.log(stateArray)
         stateArray.splice(index,1);
         setStateArray([...stateArray]);        
-        console.log(stateArray)
     },[stateArray])
 
     const changeNeighborArray = useCallback((e)=>{

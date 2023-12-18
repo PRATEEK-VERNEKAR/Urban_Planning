@@ -55,35 +55,28 @@ export default function UserDashboard() {
 
   const [allMatchingRegions, setAllMatchingRegions] = useState([])
 
-  return (
-    <div>
-      {allMatchingRegions.map((singleRegion, index) => {
-        return (
-          <div
-            key={index}
-            className="border-2"
-            onClick={() => {
-              router.push(`/user/eachRegion/${singleRegion.regionID}`)
-            }}
-          >
-            <p>Name:{singleRegion.name}</p>
-            <p>Area:{singleRegion.area.$numberDecimal}</p>
-            <p>Border Length:{singleRegion.borderLength.$numberDecimal}</p>
-            <p>
-              States:
-              {singleRegion.states.map((state, index1) => {
-                return <span key={index1}>{state}</span>
-              })}
-            </p>
-            <p>
-              Neighbor Country:
-              {singleRegion.neighborCountry.map((country, index2) => {
-                return <span key={index2}>{country},</span>
-              })}
-            </p>
-          </div>
-        )
-      })}
-    </div>
-  )
+    useEffect(()=>myFunc,[]);
+
+
+    const [regionIDs,setRegionIDs]=useState(params.regionID);
+    const [allMatchingRegions,setAllMatchingRegions]=useState([]);
+
+    return(
+        <div className='flex flex-row region lg:w-[768px] h-[512px]'>
+            {
+                allMatchingRegions.map((singleRegion,index)=>{
+                    return(
+                        <div key={index} className='w-auto flex flex-col items-center justify-center region-container h-[186px]' style={{cursor:"pointer"}} onClick={()=>{router.push(`/user/eachRegion/${singleRegion.regionID}`)}}>
+                            <div>{singleRegion.name}</div>
+                            <div>{singleRegion.area.$numberDecimal} m<sup>2</sup></div>
+                            <div>{singleRegion.borderLength.$numberDecimal} km</div>
+                            <div className='flex flex-row gap-x-3 flex-wrap'>{singleRegion.states.map((state,index1)=>{return(<span className='block' key={index1}>{state}</span>)})}</div>
+                            <div className='flex flex-row gap-x-3 flex-wrap mt-1'>{singleRegion.neighborCountry.map((country,index2)=>{return(<span className='block' key={index2}>{country}</span>)})}</div>
+                        </div>
+                    )
+                })
+            }
+        </div>
+    )
 }
+
