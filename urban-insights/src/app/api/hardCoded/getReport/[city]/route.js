@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 import {connect,disconnect} from "@/dbConfig/dbConfig";
 // import { NextRequest,NextResponse } from "next/server";
 import Report from "@/models/reportModel";
-const fs=require('fs');
 
 // export async function GET() {
 //     try{
@@ -30,7 +29,8 @@ export async function GET(request,content){
 
         const cityReport = await Report.find({city:city});
 
-        await disconnect();
+        await disconnect()
+
 
         return NextResponse.json(cityReport);
     }

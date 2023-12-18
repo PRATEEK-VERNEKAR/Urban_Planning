@@ -1,76 +1,84 @@
-import MonitorModel from "../../../models/moniteringModel";
-import {connect,disconnect} from "../../../dbConfig/dbConfig";
-import Border from "@/models/borderModel";
+import MonitorModel from '../../../models/moniteringModel'
+import { connect, disconnect } from '../../../dbConfig/dbConfig'
+import Border from '@/models/borderModel'
 import { NextResponse } from 'next/server'
-import axios from 'axios';
+import axios from 'axios'
 
+export async function POST(req, res) {
+  try {
+    await connect()
 
+    const { regionID } = await req.json()
+    const normalImagesRes = await Border.find({ regionID }, { normalImages: 1 })
 
-export async function POST(req,res){
-    try{
+    console.log(normalImagesRes[0]['normalImages'].length)
 
-        await connect();
+    const normalImages = normalImagesRes[0]['normalImages']
 
-        const {regionID}=await req.json();
-        const normalImagesRes=await Border.find({regionID},{normalImages:1});
-        
-        await disconnect()
+    for (const singleImage of normalImages) {
+      console.log(singleImage._id)
 
-        console.log(normalImagesRes[0]['normalImages'].length);
+      await connect();
 
-        const normalImages=normalImagesRes[0]['normalImages'];
+      const {regionID}=await req.json();
+      const normalImagesRes=await Border.find({regionID},{normalImages:1});
 
-        for(const singleImage of normalImages){
-            console.log(singleImage._id)
+      await disconnect()
 
-            const modelPrediction=await axios.post("http://localhost:8080/predict",{
-                image:singleImage.image.data
-            })
-
-            console.log(modelPrediction.data.classes);
-
-            const updatedImageData=await Border.updateOne(
-                {"regionID":regionID,"normalImages._id":singleImage._id},
-                {$set:{"normalImages.$.classes":modelPrediction.data.classes}}
-            )
+      const modelPrediction = await axios.post(
+        'http://localhost:8080/predict',
+        {
+          image: singleImage.image.data,
         }
+      )
 
-        const getClasses=await Border.find({regionID}).select('normalImages.classes')
+      console.log(modelPrediction.data.classes)
 
+      const updatedImageData = await Border.updateOne(
+        { regionID: regionID, 'normalImages._id': singleImage._id },
+        { $set: { 'normalImages.$.classes': modelPrediction.data.classes } }
+      )
+    }
 
-        const countMap={0:0,1:0,2:0,3:0,4:0,5:0};
+    const getClasses = await Border.find({ regionID }).select(
+      'normalImages.classes'
+    )
+    await disconnect()
 
+    const countMap = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
 
-        getClasses.forEach(doc => {
-            const normalImages = doc.normalImages || [];
-            normalImages.forEach(image => {
-                const classes = image.classes || [];
-            
-                classes.forEach((num)=>{
-                    if(countMap.hasOwnProperty(num)){
-                        countMap[num]++;
-                    }
-                })
-            });
-        });
+    getClasses.forEach((doc) => {
+      const normalImages = doc.normalImages || []
+      normalImages.forEach((image) => {
+        const classes = image.classes || []
 
-        Object.entries(countMap).forEach(([number,count])=>{
-            countMap[number]/=normalImagesRes[0]['normalImages'].length;
-            
+        classes.forEach((num) => {
+          if (countMap.hasOwnProperty(num)) {
+            countMap[num]++
+          }
         })
+      })
+    })
 
-        const threshold=Object.values(countMap);
+    Object.entries(countMap).forEach(([number, count]) => {
+      countMap[number] /= normalImagesRes[0]['normalImages'].length
+    })
 
-        console.log(threshold);
+    const threshold = Object.values(countMap)
+
+    console.log(threshold)
+
+    const updateThreshold = await Border.findOneAndUpdate(
+      { regionID },
+      { $set: { threshold: threshold } }
+    )
 
 
-        const updateThreshold=await Border.findOneAndUpdate({regionID},{$set:{threshold:threshold}});
-
-        console.log(updateThreshold)
-        
-        return NextResponse.json({"message":"Thresholds Predicted Successfully"});
-    }
-    catch(err){
-        return NextResponse.json({"message":"Error calling ML Model"},{status:500})
-    }
+    return NextResponse.json({ message: 'Thresholds Predicted Successfully' })
+  } catch (err) {
+    return NextResponse.json(
+      { message: 'Error calling ML Model' },
+      { status: 500 }
+    )
+  }
 }

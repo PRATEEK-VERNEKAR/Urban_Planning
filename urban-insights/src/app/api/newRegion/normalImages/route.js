@@ -38,7 +38,7 @@ export async function POST(req,res){
         const updateRes=await Border.findOneAndUpdate({regionID},checkBorderPresent,{new:true})
         console.log(updateRes);
 
-        await disconnect();
+        await disconnect()
 
         return NextResponse.json({
             "message":"Normal images stored successfully",

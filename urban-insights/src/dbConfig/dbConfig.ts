@@ -17,7 +17,8 @@ export async function connect(){
 
 export async function disconnect(){
     try{
-       await mongoose.disconnect().then(()=>{
+        await mongoose.disconnect().then(()=>{
+
             console.log("Disconnected successfully");
         })
         .catch(()=>{

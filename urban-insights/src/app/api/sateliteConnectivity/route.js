@@ -8,7 +8,6 @@ export async function POST(req){
     try{
         await connect();
         const data=await req.formData();
-        console.log(data)
         const image=data.get('image');
         const regionID = data.get('regionID');
         
@@ -34,9 +33,6 @@ export async function POST(req){
     
         const checkIfPresentMonitor=await MonitorModel.findOne({regionID})
         
-
-
-
         if(!checkIfPresentMonitor){
             console.log("\n\nif\n\n")
             const newMonitor=new MonitorModel({

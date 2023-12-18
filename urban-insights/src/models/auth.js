@@ -25,7 +25,9 @@ const authSchema = new mongoose.Schema({
     isAdmin:{
         type:Boolean,
         default:false
-    }
+    },
+    
+
 });
 
 const Authentication = mongoose.models.auth || mongoose.model('auth', authSchema);

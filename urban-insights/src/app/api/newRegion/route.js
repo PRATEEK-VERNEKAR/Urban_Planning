@@ -14,6 +14,7 @@ export async function POST(req,res){
         const savedNewRegion = await newRegion.save()
 
         await disconnect()
+
         return NextResponse.json({
             message:"New Region Added",
             savedNewRegion

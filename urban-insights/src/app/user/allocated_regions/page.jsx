@@ -1,12 +1,26 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, use } from 'react'
 import axios from 'axios'
-import {USER_TOKEN} from '../../../utils/consts'
+import { USER_TOKEN } from '@/utils/consts'
+import Cookies from 'js-cookie'
 
 export default function UserDashboard() {
   const [user, setUser] = useState({})
+  const router = useRouter()
+  const [token, setToken] = useState(USER_TOKEN)
+  const [allMatchingRegions, setAllMatchingRegions] = useState([])
+
+  const MatchingRegions = async (assignedRegionID) => {
+    if (user && assignedRegionID) {
+      const allMatchingRegionsResponse = await axios.post(
+        'http://localhost:3000/api/viewAllotedRegions',
+        { regionIDs: assignedRegionID }
+      )
+      setAllMatchingRegions(allMatchingRegionsResponse.data.allMatchRegions)
+    }
+  }
 
   const fetchUserByToken = async (token) => {
     try {
@@ -18,42 +32,24 @@ export default function UserDashboard() {
           },
         }
       )
-
-      setUser(user.data.user)
+      const fetchedUser = user.data.user
+      setUser(fetchedUser)
+      MatchingRegions(fetchedUser.assignedRegionID)
     } catch (error) {
-      console.log(error)
-      return null
+      console.log('got error in fetching user by token ', error)
     }
   }
- 
-  const [token, setToken] = useState(USER_TOKEN)
 
   useEffect(() => {
-    
-    if (token) {
-      fetchUserByToken(token)
-    } else {
-      router.push('/login')
+    const workUseffect = async () => {
+      if (token) {
+        await fetchUserByToken(token)
+      } else {
+        router.push('/login')
+      }
     }
-  }, [])
-
-  const router = useRouter()
-
-  const myFunc = async () => {
-    try {
-      const allMatchingRegionsResponse = await axios.post(
-        'http://localhost:3000/api/viewAllotedRegions',
-        { regionIDs: user.regionID }
-      )
-      setAllMatchingRegions(allMatchingRegionsResponse.data.allMatchRegions)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  useEffect(() => myFunc, [])
-
-  const [allMatchingRegions, setAllMatchingRegions] = useState([])
+    workUseffect()
+  }, [token])
 
   return (
     <div>
