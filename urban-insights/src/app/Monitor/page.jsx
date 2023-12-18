@@ -10,8 +10,8 @@ export default function Monitor(){
                 Monitor
             </h2>
             <div className='flex flex-row gap-x-4 w-full h-full monitor-container flex-wrap'>
-                {arr.map((element)=>{
-                    return <ImageBox {...element} />
+                {arr.map((element,key)=>{
+                    return <ImageBox key={key} {...element} />
                 })}          
             </div>
         </div>

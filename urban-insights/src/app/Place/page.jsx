@@ -9,8 +9,8 @@ export default function Place(){
     return (
         <div className='place flex flex-col mx-auto sm:w-[256px] md:w-[486px] lg:w-[786px] h-[386px]'>
             <div className='flex flex-row place-container'>
-                {arr.map((element)=>{
-                    return <Image {...element} />
+                {arr.map((element,key)=>{
+                    return <Image key={key} {...element} />
                 })}
             </div>
             <div>
