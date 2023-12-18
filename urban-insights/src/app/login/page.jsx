@@ -67,7 +67,8 @@ export default function LoginForm() {
         console.log("Login successful!");
 		    setFirstStepDone(true);
         setStartTimer(true);
-        setSecondFormData({email:response.data.user.email,regionIDs:response.data.user.assigned})
+        setSecondFormData({email:response.data.user.email,regionIDs:response.data.user.assignedRegionID})
+        console.log(data.user.assignedRegionID);
       } else {
         console.error("Login failed:", response.data.message);
 		    // setFirstFormData({username:"",password:"",deptpassword:"",deptusername:""});
@@ -88,9 +89,10 @@ export default function LoginForm() {
 
       if(optResponse.data.success){
 
-        const  getRegionID = await 
+        // const  getRegionID = await 
         console.log("Otp successful");
         let userDashBoardURL="user";
+        console.log(secondFormData);
         secondFormData.regionIDs.map((singleRegionID)=>{
           userDashBoardURL=userDashBoardURL+`/${singleRegionID}`
         })

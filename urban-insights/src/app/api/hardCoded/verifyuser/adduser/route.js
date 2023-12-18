@@ -13,7 +13,7 @@ export async function POST(req){
         console.log("MS Dhoni");
         const reqBody = await req.json();
         console.log(reqBody);
-        const {email,username,deptusername,password,deptpassword,assigned,isAdmin} = reqBody;
+        const {email,username,deptusername,password,deptpassword,assignedRegionID,isAdmin} = reqBody;
         const salt  = await bcrypt.genSalt(10)
         console.log(password)
         
@@ -27,7 +27,7 @@ export async function POST(req){
             deptusername:deptusername,
             password:hash1,
             deptpassword:hash2,
-            assigned:assigned,
+            assignedRegionID:assignedRegionID,
             isAdmin:isAdmin
         });
         console.log(newUser)

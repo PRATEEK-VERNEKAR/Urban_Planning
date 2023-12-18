@@ -14,7 +14,7 @@ export async function POST(req) {
 
     try {
         const email1 = await Otp.findOne({ email: email });
-
+        console.log("ININD")
         console.log(email1);
 
         if (email1) {
