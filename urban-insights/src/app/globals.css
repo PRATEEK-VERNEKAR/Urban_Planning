@@ -40,7 +40,7 @@
 
 body{
   color: rgb(var(--foreground-rgb));
-  background-color: #60647090;
+  background-color: #6064707a;
   background-image: url(/world.svg);
 }
 
@@ -207,6 +207,7 @@ footer div{
   color:#323643cf;
   font-size:0.8em;
   padding-left:4px;
+  width:100%;
 }
 
 .nform-input label{
@@ -333,4 +334,23 @@ footer div{
 .place-container{
   overflow-x:scroll;
   filter:brightness(50%);
+}
+
+.region{
+  background-color: #606470c3;
+  border-radius:4px;
+  padding:16px;
+  column-gap: 16px;
+}
+
+.region-container{
+  padding:8px;
+  background-color: #323643;
+  border-radius: 8px;
+  width:256px;
+}
+
+.eachRegion{
+  width:786px;
+  background-color:white;
 }
