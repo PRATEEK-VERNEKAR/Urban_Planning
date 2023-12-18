@@ -12,6 +12,7 @@ export default function LoginForm() {
     password: "",
     deptusername: "",
     deptpassword: "",
+    _id:""
   });
 
   const [secondFormData,setSecondFormData]=useState({
@@ -87,7 +88,7 @@ export default function LoginForm() {
     try{
       console.log(secondFormData.email);
       console.log(OTP);
-      const optResponse = await axios.post("http://localhost:3000/api/hardCoded/verifyuser/otpverify",{email:secondFormData.email,otp:OTP});
+      const optResponse = await axios.post("http://localhost:3000/api/hardCoded/verifyuser/otpverify",{email:secondFormData.email,otp:OTP,});
 
 
       if(optResponse.data.success){

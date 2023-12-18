@@ -4,6 +4,8 @@ import Otp from '@/models/otp.js';
 const bcrypt = require('bcrypt');
 const fs = require('fs');
 import { NextRequest, NextResponse } from 'next/server';
+import { serialize } from "cookie";
+import { sign } from "jsonwebtoken";
 
 export async function POST(req) {
     const reqBody = await req.json();

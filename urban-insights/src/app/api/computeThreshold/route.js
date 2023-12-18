@@ -9,11 +9,12 @@ import axios from 'axios';
 export async function POST(req,res){
     try{
 
-        connect();
+        await connect();
 
         const {regionID}=await req.json();
         const normalImagesRes=await Border.find({regionID},{normalImages:1});
-        // disconnect()
+        
+        await disconnect()
 
         console.log(normalImagesRes[0]['normalImages'].length);
 

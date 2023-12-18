@@ -9,7 +9,7 @@ export async function POST(req){
     
     try{
     
-        connect();
+        await connect();
         console.log("MS Dhoni");
         const reqBody = await req.json();
         console.log(reqBody);
@@ -32,7 +32,7 @@ export async function POST(req){
         });
         console.log(newUser)
         await newUser.save();
-        // disconnect();
+        await disconnect();
         return NextResponse.json({
             message:"Successfully added",
             success:true
