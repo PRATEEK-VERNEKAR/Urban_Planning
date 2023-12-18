@@ -12,7 +12,7 @@ export async function GET(req,res){
 
         await connect();
         const allMonitorRegions=await MonitorModel.find({});
-        await disconnect()
+        // await disconnect()
 
         for(const singleRegion of allMonitorRegions){
             const imageData=singleRegion['imageData'];

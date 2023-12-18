@@ -8,7 +8,7 @@ export async function POST(req){
     try{
         await connect();
         const data=await req.formData();
-        console.log(data)
+        // console.log(data)
         const image=data.get('image');
         const regionID = data.get('regionID');
         
@@ -68,7 +68,9 @@ export async function POST(req){
             await MonitorModel.findOneAndUpdate({regionID},checkIfPresentMonitor,{new:true});
         }
        
-        await disconnect();
+        // await disconnect();
+
+        console.log("HELLO");
         
         return NextResponse.json({
             "message":`New image saved for ${regionID}`
