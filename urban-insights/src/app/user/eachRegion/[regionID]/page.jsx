@@ -35,7 +35,6 @@ export default function MonitorEachRegion({ params }) {
   const pram = {width:"56px",boxShadow:"0 0 15px 2px #323643",borderRadius:"8px",columnGap:"4px"};
   const parm1 = {backgroundColor:"#323643",borderRadius:"8px",padding:"4px"}
   
-  const [currentRegion, setCurrentRegion] = useState([{ dateTime: "", predicted: false, classes: [], image: { contentType: "", data: { type: "", data: [] } } }]);
   const [loaded,setLoaded] = useState(false);
   
   const myFunc = async () => {

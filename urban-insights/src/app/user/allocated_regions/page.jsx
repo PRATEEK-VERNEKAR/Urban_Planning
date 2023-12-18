@@ -34,7 +34,7 @@ export default function UserDashboard() {
       )
       const fetchedUser = user.data.user
       setUser(fetchedUser)
-      MatchingRegions(fetchedUser.assignedRegionID)
+      await MatchingRegions(fetchedUser.assignedRegionID)
     } catch (error) {
       console.log('got error in fetching user by token ', error)
     }

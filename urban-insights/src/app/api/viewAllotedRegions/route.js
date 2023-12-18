@@ -17,7 +17,6 @@ export async function POST(req,res){
 
         await disconnect();
         
-        console.log(allMatchRegions.length);
 
         return NextResponse.json({
             allMatchRegions,
