@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(req,res){
     try{
-        connect();
+        await connect();
         const {regionID,name,states,neighborCountry,area,borderLength,govtBodies}=await req.json();
         
         const newRegion=new Border({regionID,name,states,neighborCountry,area,borderLength,govtBodies});
@@ -13,7 +13,7 @@ export async function POST(req,res){
         // console.log("\n\nINDIA\n\n");
         const savedNewRegion = await newRegion.save()
 
-        // disconnect()
+       await disconnect()
         return NextResponse.json({
             message:"New Region Added",
             savedNewRegion

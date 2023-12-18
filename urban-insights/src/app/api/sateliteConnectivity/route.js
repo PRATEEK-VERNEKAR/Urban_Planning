@@ -6,7 +6,7 @@ import { connect ,disconnect} from '@/dbConfig/dbConfig';
 
 export async function POST(req){
     try{
-        connect();
+        await connect();
         const data=await req.formData();
         console.log(data)
         const image=data.get('image');
@@ -34,9 +34,6 @@ export async function POST(req){
     
         const checkIfPresentMonitor=await MonitorModel.findOne({regionID})
         
-
-
-
         if(!checkIfPresentMonitor){
             console.log("\n\nif\n\n")
             const newMonitor=new MonitorModel({
@@ -68,7 +65,7 @@ export async function POST(req){
             await MonitorModel.findOneAndUpdate({regionID},checkIfPresentMonitor,{new:true});
         }
        
-        disconnect();
+        await disconnect();
         
         return NextResponse.json({
             "message":`New image saved for ${regionID}`

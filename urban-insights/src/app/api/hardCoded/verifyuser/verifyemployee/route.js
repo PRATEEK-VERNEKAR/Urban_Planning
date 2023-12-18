@@ -1,4 +1,4 @@
-import { connect } from '@/dbConfig/dbConfig';
+import { connect,disconnect } from '@/dbConfig/dbConfig';
 import Otp from '@/models/otp';
 import Authentication from '@/models/auth.js';
 const bcrypt = require('bcrypt');
@@ -6,12 +6,11 @@ import nodemailer from 'nodemailer';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req) {
-    connect();
+    await connect();
     let email;
     const reqBody = await req.json();
     const { deptusername, deptpassword, username, password } = reqBody;
 
-    console.log(reqBody);
 
 
     const user = await Authentication.findOne({ username: username }) // Set timeout to 30 seconds
@@ -55,6 +54,7 @@ export async function POST(req) {
                 console.log(`OTP for ${email} deleted after 1 minute.`);
             },60000); // 60000 milliseconds = 1 minute
 
+            await disconnect()
             return NextResponse.json({
                 message: "Success",
                 success: true,
