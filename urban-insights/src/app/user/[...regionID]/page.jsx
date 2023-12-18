@@ -1,20 +1,59 @@
-"use client";
+'use client'
 
-import {useRouter} from 'next/navigation';
-import {useState,useEffect} from "react";
-import axios from 'axios';
-export default function UserDashboard({params}){
+import { useRouter } from 'next/navigation'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import {USER_TOKEN} from '../../../utils/consts'
 
+export default function UserDashboard() {
+  const [user, setUser] = useState({})
 
-    console.log(params.regionID);
+  const fetchUserByToken = async (token) => {
+    try {
+      const user = await axios.get(
+        'http://localhost:3000/api/user/getUserByToken',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
 
-    const router=useRouter();
-
-    const myFunc=async()=>{
-        const allMatchingRegionsResponse=await axios.post("http://localhost:3000/api/viewAllotedRegions",{regionIDs:params.regionID});
-        console.log(allMatchingRegionsResponse.data.allMatchRegions);
-        setAllMatchingRegions(allMatchingRegionsResponse.data.allMatchRegions);
+      setUser(user.data.user)
+    } catch (error) {
+      console.log(error)
+      return null
     }
+  }
+ 
+  const [token, setToken] = useState(USER_TOKEN)
+
+  useEffect(() => {
+    
+    if (token) {
+      fetchUserByToken(token)
+    } else {
+      router.push('/login')
+    }
+  }, [])
+
+  const router = useRouter()
+
+  const myFunc = async () => {
+    try {
+      const allMatchingRegionsResponse = await axios.post(
+        'http://localhost:3000/api/viewAllotedRegions',
+        { regionIDs: user.regionID }
+      )
+      setAllMatchingRegions(allMatchingRegionsResponse.data.allMatchRegions)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => myFunc, [])
+
+  const [allMatchingRegions, setAllMatchingRegions] = useState([])
 
     useEffect(()=>myFunc,[]);
 
@@ -40,3 +79,4 @@ export default function UserDashboard({params}){
         </div>
     )
 }
+

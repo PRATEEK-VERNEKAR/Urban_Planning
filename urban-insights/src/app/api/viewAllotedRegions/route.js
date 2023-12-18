@@ -4,14 +4,19 @@ import { NextResponse } from "next/server";
 
 export async function POST(req,res){
     try{
-        connect();
+        await connect();
 
         const {regionIDs}=await req.json();
+
+        console.log("regionIds",regionIDs)
 
         console.log(regionIDs);
 
         const allMatchRegions=await Border.find({regionID:{$in:regionIDs}});
 
+
+        await disconnect();
+        
         console.log(allMatchRegions.length);
 
         return NextResponse.json({

@@ -7,8 +7,13 @@ import MonitorModel from '../../../../models/moniteringModel';
 
 export async function GET(request,content){
     try{
-        connect();
-        console.log(content.params.regionID)
+
+        await connect();
+         const user = JSON.parse(request.headers.get('user'))
+         console.log("user at backend is",user)
+         console.log("user at content  is",content)
+         const allocatedRegions = user.allocatedRegions;
+
         const regionID=content.params.regionID;
         const checkBorderPresent = await Border.findOne({regionID});
 
@@ -20,7 +25,7 @@ export async function GET(request,content){
 
         const completeInfo=await MonitorModel.findOne({regionID});
         console.log(typeof(completeInfo))
-        // disconnect();
+        await disconnect();
 
         return NextResponse.json({completeInfo},{status:200})
     }

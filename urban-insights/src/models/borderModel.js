@@ -35,7 +35,17 @@ const borderSchema=mongoose.Schema({
             },
             emails:[String]
         }
-    ]
+    ],
+    normalImages:[
+        {
+            image:{
+                data:Buffer,
+                contentType:String
+            },
+            classes:[Number]    
+        }
+    ],
+    threshold:[Number]
 })
 
 const Border=mongoose.models.borders || mongoose.model('borders',borderSchema);

@@ -1,43 +1,73 @@
-"use client";
+'use client'
 
-import axios from 'axios';
-import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { USER_TOKEN } from '@/utils/consts'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
 
 const BinaryImageDisplay = ({ binaryImageData, mimeType }) => {
-  const [dataURL, setDataURL] = useState('');
+  const [dataURL, setDataURL] = useState('')
 
   useEffect(() => {
     // Convert binary data to base64
-    const base64Image = btoa(String.fromCharCode.apply(null, binaryImageData));
+    const base64Image = btoa(String.fromCharCode.apply(null, binaryImageData))
 
     // Create a data URL
-    const newDataURL = `data:${mimeType};base64,${base64Image}`;
+    const newDataURL = `data:${mimeType};base64,${base64Image}`
 
     // Update the state to trigger a re-render with the new data URL
-    setDataURL(newDataURL);
-  }, [binaryImageData, mimeType]);
-  
+    setDataURL(newDataURL)
+  }, [binaryImageData, mimeType])
 
-  return <img src={dataURL} alt='Binary Image' />;
+  return <img src={dataURL} alt="Binary Image" />
 }
 
 export default function MonitorEachRegion({ params }) {
-
-  const myFunc = async () => {
-    const monitoredRegionInfo = await axios.get(`http://localhost:3000/api/monitorEachRegion/${params.regionID}`);
-    setCurrentRegion(monitoredRegionInfo.data.completeInfo.imageData);
-    setLoaded(true)
-  }
+  const [currentRegion, setCurrentRegion] = useState([
+    {
+      dateTime: '',
+      predicted: false,
+      classes: [],
+      image: { contentType: '', data: { type: '', data: [] } },
+    },
+  ])
+  
   const pram = {width:"56px",boxShadow:"0 0 15px 2px #323643",borderRadius:"8px",columnGap:"4px"};
   const parm1 = {backgroundColor:"#323643",borderRadius:"8px",padding:"4px"}
-  useEffect(() => { myFunc() }, [])
-
+  
   const [currentRegion, setCurrentRegion] = useState([{ dateTime: "", predicted: false, classes: [], image: { contentType: "", data: { type: "", data: [] } } }]);
   const [loaded,setLoaded] = useState(false);
+  
+  const myFunc = async () => {
 
-  const countOccurances=(arr,num)=>{
-    return arr.filter((temp)=>{return +temp.$numberDecimal===num}).length
+    setLoaded(true)
+
+
+    try {
+      const monitoredRegionInfo = await axios.get(
+        `http://localhost:3000/api/monitorEachRegion/${params.regionID}`,
+        {
+          headers: {
+            Authorization: `Bearer ${USER_TOKEN}`,
+          },
+        }
+      )
+      const regionInfo = monitoredRegionInfo.data.completeInfo.imageData
+      console.log('regionInfo', regionInfo)
+      setCurrentRegion(regionInfo)
+    } catch (error) {
+      console.log('error at regionId', error)
+    }
+  }
+
+  useEffect(() => {
+    myFunc()
+  }, [currentRegion])
+
+  const countOccurances = (arr, num) => {
+    return arr.filter((temp) => {
+      return +temp.$numberDecimal === num
+    }).length
   }
 
   return (
@@ -68,5 +98,6 @@ export default function MonitorEachRegion({ params }) {
         )
       }
     </div>
+
   )
 }

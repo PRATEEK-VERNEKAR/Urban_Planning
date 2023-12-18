@@ -5,7 +5,7 @@ import { NextRequest,NextResponse } from 'next/server';
 
 export async function POST(req){
     try{
-        connect();
+        await connect();
         // console.log("YUII")
         const reqBody=await req.json();
         // console.log(reqBody)
@@ -32,7 +32,7 @@ export async function POST(req){
 
         await newCity.save();
 
-        disconnect()
+        await disconnect()
 
         return NextResponse.json({
             message:"Report added",
