@@ -61,6 +61,7 @@ export default function LoginForm() {
     e.preventDefault();
 
     try {
+      console.log(firstFormData);
       const response = await axios.post("http://localhost:3000/api/hardCoded/verifyuser/verifyemployee", firstFormData);
 
       if (response.data.success) {
@@ -74,7 +75,7 @@ export default function LoginForm() {
 		    // setFirstFormData({username:"",password:"",deptpassword:"",deptusername:""});
       }
     } catch (error) {
-		  setFirstFormData({username:"",password:"",deptpassword:"",deptusername:""});
+		  // setFirstFormData({username:"",password:"",deptpassword:"",deptusername:""});
 	    console.error("Error during login:", error);
     }
   };
@@ -84,12 +85,13 @@ export default function LoginForm() {
     setFirstStepDone(true);
 
     try{
+      console.log(secondFormData.email);
+      console.log(OTP);
       const optResponse = await axios.post("http://localhost:3000/api/hardCoded/verifyuser/otpverify",{email:secondFormData.email,otp:OTP});
 
 
       if(optResponse.data.success){
 
-        // const  getRegionID = await 
         console.log("Otp successful");
         let userDashBoardURL="user";
         console.log(secondFormData);
@@ -192,7 +194,7 @@ export default function LoginForm() {
                   className="w-full outline-none transparent"
                 />
               </div>
-              {seconds<60?<span>{seconds}</span>:<button onClick={(e)=>{setStartTimer(false); setSeconds(0); handleLoginFirst(e);}}>Resend Code</button>}
+              {seconds<60?<span>{seconds}</span>:<button onClick={(e)=>{setStartTimer(true); setSeconds(0); handleLoginFirst(e);}}>Resend Code</button>}
               <button type="submit" className="nform-send login-send mx-auto">Login</button>
             </form>
           </div>
