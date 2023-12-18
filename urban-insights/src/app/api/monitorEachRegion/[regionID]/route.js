@@ -10,9 +10,10 @@ export async function GET(request,content){
 
         await connect();
          const user = JSON.parse(request.headers.get('user'))
+         console.log("user at backend is",user)
+         console.log("user at content  is",content)
          const allocatedRegions = user.allocatedRegions;
         //  if (regionID in allocatedRegions){
-        console.log(content.params.regionID)
         const regionID=content.params.regionID;
         const checkBorderPresent = await Border.findOne({regionID});
 

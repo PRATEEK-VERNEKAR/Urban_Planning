@@ -6,7 +6,6 @@ import Authentication from '@/models/auth.js';
 const bcrypt = require('bcrypt');
 import nodemailer from 'nodemailer';
 import { NextRequest, NextResponse } from 'next/server';
-import signToken from '@/utils/signToken';
 
 export async function POST(req) {
     await connect();
@@ -16,14 +15,7 @@ export async function POST(req) {
 
     const user = await Authentication.findOne({ username: username }) // Set timeout to 30 seconds
 
-    const token = await signToken({
-      _id: user._id,
-      email: user.email,
-      username: user.username,
-      deptusername: user.deptusername,
-      assignedRegionID: user.assignedRegionID,
-      isAdmin: user.isAdmin,
-    })
+   
 
     if (user) {
         const check = await bcrypt.compare(deptpassword, user.deptpassword);
@@ -41,7 +33,6 @@ export async function POST(req) {
                 return NextResponse.json({
                     message: "Cant send otp",
                     success: false,
-                    token:""
                 }); 
             }
 
@@ -70,7 +61,6 @@ export async function POST(req) {
             return NextResponse.json({
                 message: "Success",
                 success: true,
-                token,
                 email,
                 assignedRegionID:user.assignedRegionID
             });

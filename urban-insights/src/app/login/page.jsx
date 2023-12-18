@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import Cookies from 'js-cookie'
+import { USER_TOKEN } from '../../utils/consts'
 
 export default function LoginForm() {
   const [firstFormData, setFirstFormData] = useState({
@@ -24,9 +25,6 @@ export default function LoginForm() {
   const [startTimer, setStartTimer] = useState(false)
   const [seconds, setSeconds] = useState(0)
 
-  const USER_TOKEN = Cookies.get('userToken')
-    ? Cookies.get('userToken')
-    : null
   const [token, setToken] = useState(USER_TOKEN)
 
   useEffect(() => {
@@ -84,8 +82,6 @@ export default function LoginForm() {
           email: response.data.email,
           regionIDs: response.data.assignedRegionID,
         })
-        Cookies.remove('userToken')
-        Cookies.set('userToken', response.data.token)
       } else {
         console.error('Login failed:', response.data.message)
         // setFirstFormData({username:"",password:"",deptpassword:"",deptusername:""});
@@ -110,16 +106,24 @@ export default function LoginForm() {
 
       if (optResponse.data.success) {
         console.log('Otp successful')
-        // let userDashBoardURL = `${firstFormData.username}/allocated_regions`
-        // console.log(secondFormData)
-        // router.push(userDashBoardURL)
+        Cookies.remove('userToken')
+        const expirationDate = new Date()
+        expirationDate.setTime(expirationDate.getTime() + 6 * 60 * 60 * 1000) // 6 hours in milliseconds
+
+        // Set the cookie with the expiry date
+        Cookies.set('userToken', optResponse.data.token, {
+          expires: expirationDate,
+        })
 
         console.log('Otp successful')
-        let userDashBoardURL = 'user'
+        // let userDashBoardURL = 'user'
+        // console.log(secondFormData)
+        let userDashBoardURL = `${firstFormData.username}/allocated_regions`
         console.log(secondFormData)
-        secondFormData.regionIDs.map((singleRegionID) => {
-          userDashBoardURL = userDashBoardURL + `/${singleRegionID}`
-        })
+        router.push(userDashBoardURL)
+        // secondFormData.regionIDs.map((singleRegionID) => {
+        //   userDashBoardURL = userDashBoardURL + `/${singleRegionID}`
+        // })
 
         console.log(userDashBoardURL)
 

@@ -3,17 +3,26 @@
 import { useRouter } from 'next/navigation'
 import { useState, useEffect, use } from 'react'
 import axios from 'axios'
+import { USER_TOKEN } from '@/utils/consts'
 import Cookies from 'js-cookie'
 
 export default function UserDashboard() {
   const [user, setUser] = useState({})
   const router = useRouter()
-  const USER_TOKEN = Cookies.get('userToken') ? Cookies.get('userToken') : null
   const [token, setToken] = useState(USER_TOKEN)
   const [allMatchingRegions, setAllMatchingRegions] = useState([])
 
+  const MatchingRegions = async (assignedRegionID) => {
+    if (user && assignedRegionID) {
+      const allMatchingRegionsResponse = await axios.post(
+        'http://localhost:3000/api/viewAllotedRegions',
+        { regionIDs: assignedRegionID }
+      )
+      setAllMatchingRegions(allMatchingRegionsResponse.data.allMatchRegions)
+    }
+  }
+
   const fetchUserByToken = async (token) => {
-    console.log('token before call', token)
     try {
       const user = await axios.get(
         'http://localhost:3000/api/user/getUserByToken',
@@ -23,9 +32,9 @@ export default function UserDashboard() {
           },
         }
       )
-      console.log('user is', user.data.user)
       const fetchedUser = user.data.user
-      setUser(fetchUserByToken)
+      setUser(fetchedUser)
+      MatchingRegions(fetchedUser.assignedRegionID)
     } catch (error) {
       console.log('got error in fetching user by token ', error)
     }
@@ -40,24 +49,7 @@ export default function UserDashboard() {
       }
     }
     workUseffect()
-  }, [])
-
-  useEffect(() => {
-    const MatchingRegions = async () => {
-      console.log('user in allocated', user)
-      if (user && user.assignedRegionID) {
-        console.log('user in allocated', user.assignedRegionID)
-        const allMatchingRegionsResponse = await axios.post(
-          'http://localhost:3000/api/viewAllotedRegions',
-          { regionIDs: user.assignedRegionID }
-        )
-        console.log('allMatchingRegionsResponse', allMatchingRegionsResponse)
-        setAllMatchingRegions(allMatchingRegionsResponse.data.allMatchRegions)
-      }
-    }
-
-    MatchingRegions()
-  }, [user])
+  }, [token])
 
   return (
     <div>

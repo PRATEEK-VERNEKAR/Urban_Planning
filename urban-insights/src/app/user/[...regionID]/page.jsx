@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import Cookies from 'js-cookie'
+import {USER_TOKEN} from '../../../utils/consts'
 
 export default function UserDashboard() {
   const [user, setUser] = useState({})
@@ -25,9 +25,7 @@ export default function UserDashboard() {
       return null
     }
   }
- const USER_TOKEN = Cookies.get('userToken')
-   ? JSON.parse(Cookies.get('userToken'))
-   : null
+ 
   const [token, setToken] = useState(USER_TOKEN)
 
   useEffect(() => {
