@@ -88,7 +88,6 @@ export default function LoginForm() {
 
       if(optResponse.data.success){
 
-        const  getRegionID = await 
         console.log("Otp successful");
         let userDashBoardURL="user";
         secondFormData.regionIDs.map((singleRegionID)=>{
@@ -178,19 +177,21 @@ export default function LoginForm() {
         (
           <div>
             <form onSubmit={handleLoginSecond} className='flex flex-col gap-y-4 nform'>
-              <div className="flex flex-row nform-input">
-                <label htmlFor="otp">OTP:</label>
-                <input
-                  type="password"
-                  id="otp"
-                  name="otp"
-                  value={OTP}
-                  onChange={(e)=>{setOTP(e.target.value)}}
-                  required
-                  className="w-full outline-none transparent"
-                />
+              <div className="flex flex-row nform-input"> 
+                <div className="flex flex-row w-full">
+                  <label htmlFor="otp">OTP </label>
+                  <input
+                    type="password"
+                    id="otp"
+                    name="otp"
+                    value={OTP}
+                    onChange={(e)=>{setOTP(e.target.value)}}
+                    required
+                    className="w-full outline-none transparent"
+                  />
+                </div>
+                {seconds<60?<button className="w-[32px] block dept" disabled={true}>{seconds}</button>:<button className="w-[64px] block dept" onClick={(e)=>{setStartTimer(false); setSeconds(0); handleLoginFirst(e);}}>Resend Code</button>}
               </div>
-              {seconds<60?<span>{seconds}</span>:<button onClick={(e)=>{setStartTimer(false); setSeconds(0); handleLoginFirst(e);}}>Resend Code</button>}
               <button type="submit" className="nform-send login-send mx-auto">Login</button>
             </form>
           </div>
