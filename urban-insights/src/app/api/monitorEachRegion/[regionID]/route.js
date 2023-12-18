@@ -7,7 +7,7 @@ import MonitorModel from '../../../../models/moniteringModel';
 
 export async function GET(request,content){
     try{
-        connect();
+        await connect();
         console.log(content.params.regionID)
         const regionID=content.params.regionID;
         const checkBorderPresent = await Border.findOne({regionID});
@@ -20,7 +20,7 @@ export async function GET(request,content){
 
         const completeInfo=await MonitorModel.findOne({regionID});
         console.log(typeof(completeInfo))
-        // disconnect();
+        await disconnect();
 
         return NextResponse.json({completeInfo},{status:200})
     }

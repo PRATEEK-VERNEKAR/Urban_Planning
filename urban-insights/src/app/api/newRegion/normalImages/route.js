@@ -5,7 +5,7 @@ import {NextResponse} from "next/server";
 
 export async function POST(req,res){
     try{
-        connect();
+        await connect();
 
         const data= await req.formData();
         
@@ -37,6 +37,8 @@ export async function POST(req,res){
 
         const updateRes=await Border.findOneAndUpdate({regionID},checkBorderPresent,{new:true})
         console.log(updateRes);
+
+        await disconnect();
 
         return NextResponse.json({
             "message":"Normal images stored successfully",

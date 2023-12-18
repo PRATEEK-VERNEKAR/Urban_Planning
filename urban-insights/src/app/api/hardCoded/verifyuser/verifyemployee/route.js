@@ -6,7 +6,7 @@ import nodemailer from 'nodemailer';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req) {
-    connect();
+    await connect();
     let email;
     const reqBody = await req.json();
     const { deptusername, deptpassword, username, password } = reqBody;

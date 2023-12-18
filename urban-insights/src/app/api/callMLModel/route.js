@@ -10,9 +10,9 @@ const delay = (ms)=> new Promise((resolve)=>setTimeout(resolve,ms));
 export async function GET(req,res){
     try{
 
-        connect();
+        await connect();
         const allMonitorRegions=await MonitorModel.find({});
-        // disconnect()
+        await disconnect()
 
         for(const singleRegion of allMonitorRegions){
             const imageData=singleRegion['imageData'];
