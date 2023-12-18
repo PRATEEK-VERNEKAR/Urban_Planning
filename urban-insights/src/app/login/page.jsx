@@ -118,14 +118,9 @@ export default function LoginForm() {
         console.log('Otp successful')
         // let userDashBoardURL = 'user'
         // console.log(secondFormData)
-        let userDashBoardURL = `${firstFormData.username}/allocated_regions`
+        let userDashBoardURL = `user/allocated_regions`
         console.log(secondFormData)
         router.push(userDashBoardURL)
-        // secondFormData.regionIDs.map((singleRegionID) => {
-        //   userDashBoardURL = userDashBoardURL + `/${singleRegionID}`
-        // })
-
-        console.log(userDashBoardURL)
 
         router.push(userDashBoardURL)
       }
