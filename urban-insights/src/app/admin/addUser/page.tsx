@@ -1,7 +1,7 @@
 // UserRegistration.js
 "use client";
 import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation'
 import axios from 'axios';
 
 export default function UserRegistration() {
@@ -12,6 +12,9 @@ export default function UserRegistration() {
     password: '',
     deptpassword: '',
   });
+
+  const router = useRouter()
+
 
   const handleInputChange = (e: { target: { name: any; value: any; }; }) => {
     const { name, value } = e.target;
@@ -28,8 +31,6 @@ export default function UserRegistration() {
       const response = await axios.post('http://localhost:3000/api/hardCoded/verifyuser/adduser', formData);
 
       if (response.data.success) {
-        console.log('Registration successful!');
-        const router = useRouter();
         router.back();
         console.log(router) 
 
